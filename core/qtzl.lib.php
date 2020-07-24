@@ -68,5 +68,11 @@ class engine{
         echo $this->html;
     }
 }
+
+class form{
+    function __construct(){
+        
+    }
+}
 ?>
 

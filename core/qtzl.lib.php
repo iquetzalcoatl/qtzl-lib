@@ -41,9 +41,11 @@ class engine{
         if ($this->connection=='online') {
             $this->css='https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css';
             $this->map='https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.css.map';
+            $this->js='https://kit.fontawesome.com/df83b7e0ad.js" crossorigin="anonymous';
         }else{
             $this->css='css/bulma.css';
             $this->map='css/bulma.css.map';
+            $this->js='js/fontawesome.js';
         }
         $this->html ='
 <!DOCTYPE html>
@@ -60,6 +62,9 @@ class engine{
     <link rel="stylesheet" type="text/css" href="'.$this->css.'">
     <link rel="stylesheet" type="text/css" href="'.$this->map.'">
 </head>
+<body>
+<script src=""></script>
+</body>
 </html>
 ';
         return $this->html;

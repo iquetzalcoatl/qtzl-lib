@@ -75,10 +75,27 @@ class navbar{
     }
 }
 
+
+
+class button{
+    function __construct(){
+        
+        
+    }
+}
+
 class form{
     function __construct(){
         
     }
 }
+
+class columns{
+    function __construct(){
+        
+    }
+}
+
+
 
 

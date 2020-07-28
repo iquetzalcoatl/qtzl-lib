@@ -283,5 +283,122 @@ class columns{
     }
 }
 
+/**
+ * qtzl-lib class box
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
+class box{
+    private $box = '';
+    var $title = '';
+    var $account = '';
+    var $text = '';
+    var $image = '';
+    var $timestamp = '';
+    var $icons = '';
+    
+    function __construct($title, $account, $text, $image, $timestamp=NULL,$iconless=FALSE){
+        $this->title = $title;
+        $this->account = $account;
+        $this->text = $text;
+        $this->image = $image;
+        $this->timestamp = $timestamp;
+        $this->box .= '
+                <div class="box">
+                  <article class="media">
+                    <div class="media-left">
+                      <figure class="image is-64x64">
+                        <img src="'.$this->image.'" alt="Image">
+                      </figure>
+                    </div>
+                    <div class="media-content">
+                      <div class="content">
+                        <p>
+                          <strong>'.$this->title.'</strong> <small>@'.$this->account.'</small> <small>'.$this->timestamp.'</small>
+                          <br>
+                          '.$this->text.'
+                        </p>
+                      </div>
+                      <nav class="level is-mobile">
+                        <div class="level-left">
+        ';
+        
+        if ($iconless == FALSE) {
+            $this->box .= '
+                  <a class="level-item" aria-label="reply">
+                    <span class="icon is-small">
+                      <i class="fas fa-reply" aria-hidden="true"></i>
+                    </span>
+                  </a>
+                  <a class="level-item" aria-label="retweet">
+                    <span class="icon is-small">
+                      <i class="fas fa-retweet" aria-hidden="true"></i>
+                    </span>
+                  </a>
+                  <a class="level-item" aria-label="like">
+                    <span class="icon is-small">
+                      <i class="fas fa-heart" aria-hidden="true"></i>
+                    </span>
+                  </a>
+            ';
+        }
+    }
+    
+    /**
+     * qtzl-lib box addIcon function
+     * @param $icons string get the icon(s) from FontAwesome library
+     * @return string
+     * @example $box = new box(); $box->addIcon($icons);
+     * @version Bekermeye (1.2007)
+     * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+     * @author Javier Garrido <javier-garrido@live.com>
+     * @author Enrique Canto <eacm97@hotmail.com>
+     * @license GNU General Public License Version 3
+     */
+    function addIcon($icons) {
+        $this->icons = $icons;
+        
+        if (!is_array($this->icons)) {
+            $nameIcon = array($this->icons);
+        }
+        
+        for ($i = 0; $i < count($this->icons); $i++) {
+            $this->box .= '
+              <a class="level-item" aria-label="'.$this->icons[$i].'">
+                <span class="icon is-small">
+                  <i class="fas fa-'.$this->icons[$i].'" aria-hidden="true"></i>
+                </span>
+              </a>
+            ';
+            
+        }
 
+        return $this->box;
+    }
+    
+    /**
+     * qtzl-lib box render function
+     * @return string
+     * @example $box = new box(); $box->render();
+     * @version Bekermeye (1.2007)
+     * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+     * @author Javier Garrido <javier-garrido@live.com>
+     * @author Enrique Canto <eacm97@hotmail.com>
+     * @license GNU General Public License Version 3
+     */
+    function render() {
+        $this->box .= '
+                    </div>
+                  </nav>
+                </div>
+              </article>
+            </div>
 
+        ';
+        
+        return $this->box;
+    }
+}

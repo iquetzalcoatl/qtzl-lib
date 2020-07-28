@@ -362,7 +362,7 @@ class box{
         $this->icons = $icons;
         
         if (!is_array($this->icons)) {
-            $nameIcon = array($this->icons);
+            $this->icons = array($this->icons);
         }
         
         for ($i = 0; $i < count($this->icons); $i++) {
@@ -372,8 +372,7 @@ class box{
                   <i class="fas fa-'.$this->icons[$i].'" aria-hidden="true"></i>
                 </span>
               </a>
-            ';
-            
+            ';  
         }
 
         return $this->box;

@@ -26,8 +26,10 @@ define('ROOT', basename(__DIR__),TRUE);
 define('ROOT_PATH', str_replace('\\', '/',__DIR__.'/'));
 define('MODULES_PATH',ROOT_PATH.'modules');
 define('ENGINE', ROOT_PATH.'core/qtzl.lib.php');
-define('QTZL-ver', '1.2007');
-define('QTZL-codename', 'Bekermeye');
+define('QTZL_ver', '1.2007');
+define('QTZL_codename', 'Bekermeye');
+define('QTZL_company', 'Dev');
+define('QTZL_logo', 'core/logo.png');
 
 define('DEBUG_MODE', TRUE);
 if (DEBUG_MODE!=FALSE) {

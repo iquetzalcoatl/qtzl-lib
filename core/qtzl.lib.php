@@ -30,15 +30,30 @@ class engine{
     private $css;
     private $map;
     
-    function __construct(){
-        
+    function __construct($navbar=NULL,$icons=NULL,$lang='es'){
+        if ($navbar==NULL) {
+            $this->navbar = ' class="has-navbar-fixed-top';
+        }else{
+            $this->navbar = ' class="'.$navbar.'';
+        }
+        if ($icons==NULL) {
+            $this->icons = ' fontsawsome-i2svg-active fontawesome-i2svg-complete"';
+        }else{
+            $this->icons = ' '.$icons.'"';
+        }
+        if ($lang==NULL){
+            $this->lang = ' lang="es-MX"';
+        }else{
+            $this->lang = ' lang="'.$lang.'"';
+        }
+        $this->html_config = $this->navbar.$this->icons.$this->lang;
     }
     
     /**
      * qtzl-lib engine load function
      * @param $title string to set webpage title
      * @param $dir string to check currently folder
-     * @param $source set online or offline manually
+     * @param $source string set online or offline manually
      * @return string
      * @example $engine = new engine(); $engine->load();
      * @version Bekermeye (1.2007)
@@ -85,7 +100,7 @@ class engine{
         }
         $this->html ='
 <!DOCTYPE html>
-<html>
+<html'.$this->html_config.'>
 <head>
 	<title>'.$this->title.'</title>
     <meta name="msapplication-TileColor" content="#F0F0F0">
@@ -99,7 +114,7 @@ class engine{
     <link rel="stylesheet" type="text/css" href="'.$this->map.'">
 </head>
 <body>
-<script src=""></script>
+<script src="'.$this->js.'"></script>
 </body>
 </html>
 ';
@@ -130,9 +145,99 @@ class engine{
  * @license GNU General Public License Version 3
  */
 class navbar{
-    function __construct(){
-        
+    var $navbar;
+    var $logo = QTZL_logo;
+    var $mode = 'navbar';
+    
+    function __construct($mode=NULL,$color=NULL){
+        switch ($mode){
+            case 'fixedtop':
+                $this->mode = 'navbar is-fixed-top';
+                break;
+            case 'fixedbottom':
+                $this->mode = 'navbar is-fixed-bottom';
+                break;
+            case 'transparent':
+                $this->mode = 'navbar is-transparent';
+                break;
+            case 'transparent-fixedtop':
+                $this->mode = 'navbar is-transparent is-fixed-top';
+                break;
+            case 'transparent-fixedbottom':
+                $this->mode = 'navbar is-transparent is-fixed-bottom';
+                break;
+            default:
+                $this->mode = 'navbar is-fixed-top';
+                break;
+        }
+        switch ($color){
+            case 'primary':
+                $this->mode = $this->mode.' is-primary';
+                break;
+            case 'link':
+                $this->mode = $this->mode.' is-link';
+                break;
+            case 'info':
+                $this->mode = $this->mode.' is-info';
+                break;
+            case 'success':
+                $this->mode = $this->mode.' is-success';
+                break;
+            case 'warning':
+                $this->mode = $this->mode.' is-warning';
+                break;
+            case 'danger':
+                $this->mode = $this->mode.' is-danger';
+                break;
+            case 'black':
+                $this->mode = $this->mode.' is-black';
+                break;
+            case 'dark':
+                $this->mode = $this->mode.' is-dark';
+                break;
+            case 'light':
+                $this->mode = $this->mode.' is-light';
+                break;
+            case 'white':
+                $this->mode = $this->mode.' is-white';
+                break;
+            default:
+                $this->mode = $this->mode.' is-light';
+                break;                
+        }
+        $this->navbar='
+<nav class="'.$this->mode.'" role="navigation" aria-label="main navigation">
+    <div class="navbar-start">
+        <a class="navbar-item">
+            <img src="'.$this->logo.'" width="112" height="28">
+        </a>
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navibar">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>';
     }
+    //FIXME
+    function autonavbar($dir,$company_name=NULL,$logo=NULL){
+        
+
+    }
+    
+    
+    function manualnavbar($menu){
+        $this->navbar.='
+        <div id="navibar" class="navbar-menu">
+            <div class="navbar-start">';
+        
+        $this->navbar.='
+            </div>
+        </div>
+    </div>
+</nav>';
+        
+        return $this->navbar;
+    }
+
 }
 
 /**
@@ -177,7 +282,6 @@ class columns{
         
     }
 }
-
 
 
 

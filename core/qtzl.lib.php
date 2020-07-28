@@ -149,6 +149,33 @@ class navbar{
     var $logo = QTZL_logo;
     var $mode = 'navbar';
     
+    /**
+     * qtzl-lib navbar class
+     * @param $mode string options available for navbar
+     * <li><b>fixedtop</b>: for fix on top navbar</li>
+     * <li><b>fixedbottom</b>: for fix on bottom navbar</li>
+     * <li><b>transparent</b>: for no background navbar</li>
+     * <li><b>transparent-fixedtop</b>: transparent and fixedtop navbar</li>
+     * <li><b>transparent-fixedbottom</b>: transparent and fixedbottom navbar</li>
+     * @param $color string options available color navbar
+     * <li><b>primary</b>: color hsl(171, 100%, 41%)</li>
+     * <li><b>link</b>: color hsl(217, 71%, 53%)</li>
+     * <li><b>info</b>: color hsl(204, 86%, 53%)</li>
+     * <li><b>success</b>: color hsl(141, 71%, 48%)</li>
+     * <li><b>warning</b>: color hsl(48, 100%, 67%)</li>
+     * <li><b>danger</b>: color hsl(348, 100%, 61%)</li>
+     * <li><b>black</b>: color hsl(0, 0%, 4%)</li>
+     * <li><b>dark</b>: color hsl(0, 0%, 21%)</li>
+     * <li><b>light</b>: color hsl(0, 0%, 96%)</li>
+     * <li><b>white</b>: color hsl(0, 0%, 100%)</li>
+     * @return string
+     * @example $navbar = new navbar();
+     * @version Bekermeye (1.2007)
+     * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+     * @author Javier Garrido <javier-garrido@live.com>
+     * @author Enrique Canto <eacm97@hotmail.com>
+     * @license GNU General Public License Version 3
+     */
     function __construct($mode=NULL,$color=NULL){
         switch ($mode){
             case 'fixedtop':
@@ -371,10 +398,14 @@ class box{
                 <span class="icon is-small">
                   <i class="fas fa-'.$this->icons[$i].'" aria-hidden="true"></i>
                 </span>
-              </a>
-            ';  
+              </a>';  
         }
-
+        $this->box .= '
+                    </div>
+                  </nav>
+                </div>
+              </article>
+            </div>';
         return $this->box;
     }
     
@@ -388,15 +419,13 @@ class box{
      * @author Enrique Canto <eacm97@hotmail.com>
      * @license GNU General Public License Version 3
      */
-    function render() {
+    function render() {// This is necessary? WHY?
         $this->box .= '
                     </div>
                   </nav>
                 </div>
               </article>
-            </div>
-
-        ';
+            </div>';
         
         return $this->box;
     }

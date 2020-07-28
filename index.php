@@ -5,7 +5,7 @@ include_once ENGINE;
 $engine = new engine();
 $engine->load('Qtzl-lib');
 $engine->render();
-$navbar = new navbar();
+$navbar = new navbar(NULL,'danger');
 echo $navbar->manualnavbar(NULL);
 
 ?>

@@ -96,7 +96,7 @@ class engine{
         }else{
             $this->css='css/bulma.css';
             $this->map='css/bulma.css.map';
-            $this->js='js/fontawesome.js';
+            $this->js='js/fontsawesome.js';
         }
         $this->html ='
 <!DOCTYPE html>

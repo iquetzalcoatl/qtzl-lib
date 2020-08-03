@@ -319,94 +319,44 @@ class columns{
  * @license GNU General Public License Version 3
  */
 class box{
-    private $box = '';
-    var $title = '';
-    var $account = '';
-    var $text = '';
-    var $image = '';
-    var $timestamp = '';
-    var $icons = '';
-    
-    function __construct($title, $account, $text, $image, $timestamp=NULL,$iconless=FALSE){
-        $this->title = $title;
-        $this->account = $account;
-        $this->text = $text;
-        $this->image = $image;
-        $this->timestamp = $timestamp;
-        $this->box .= '
-                <div class="box">
-                  <article class="media">
-                    <div class="media-left">
-                      <figure class="image is-64x64">
-                        <img src="'.$this->image.'" alt="Image">
-                      </figure>
-                    </div>
-                    <div class="media-content">
-                      <div class="content">
-                        <p>
-                          <strong>'.$this->title.'</strong> <small>@'.$this->account.'</small> <small>'.$this->timestamp.'</small>
-                          <br>
-                          '.$this->text.'
-                        </p>
-                      </div>
-                      <nav class="level is-mobile">
-                        <div class="level-left">
-        ';
-        
-        if ($iconless == FALSE) {
-            $this->box .= '
-                  <a class="level-item" aria-label="reply">
-                    <span class="icon is-small">
-                      <i class="fas fa-reply" aria-hidden="true"></i>
-                    </span>
-                  </a>
-                  <a class="level-item" aria-label="retweet">
-                    <span class="icon is-small">
-                      <i class="fas fa-retweet" aria-hidden="true"></i>
-                    </span>
-                  </a>
-                  <a class="level-item" aria-label="like">
-                    <span class="icon is-small">
-                      <i class="fas fa-heart" aria-hidden="true"></i>
-                    </span>
-                  </a>
-            ';
-        }
+    private $init = '';
+    private $body = '';
+    private $end = '';
+    private $isRender = FALSE;
+    function __construct() {
+        $this->init = '
+<div class="box">
+    ';
+        $this->end = '
+</div>
+    ';
     }
     
     /**
-     * qtzl-lib box addIcon function
-     * @param $icons string get the icon(s) from FontAwesome library
+     * qtzl-lib box addItem function
      * @return string
-     * @example $box = new box(); $box->addIcon($icons);
+     * @example $box = new box(); $box->addItem($item);
      * @version Bekermeye (1.2007)
      * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
      * @author Javier Garrido <javier-garrido@live.com>
      * @author Enrique Canto <eacm97@hotmail.com>
      * @license GNU General Public License Version 3
      */
-    function addIcon($icons) {
-        $this->icons = $icons;
-        
-        if (!is_array($this->icons)) {
-            $this->icons = array($this->icons);
+    function addItem($item=NULL) {
+        if ($this->isRender == FALSE) {
+            
+            if ($item != NULL) {
+                if (!is_array($item)) {
+                    
+                    $item = array($item);
+                }
+                
+                for ($i = 0; $i < count($item); $i++) {
+                    
+                    $this->body .= $item[$i];
+                }
+            }
         }
-        
-        for ($i = 0; $i < count($this->icons); $i++) {
-            $this->box .= '
-              <a class="level-item" aria-label="'.$this->icons[$i].'">
-                <span class="icon is-small">
-                  <i class="fas fa-'.$this->icons[$i].'" aria-hidden="true"></i>
-                </span>
-              </a>';  
-        }
-        $this->box .= '
-                    </div>
-                  </nav>
-                </div>
-              </article>
-            </div>';
-        return $this->box;
     }
     
     /**
@@ -419,14 +369,86 @@ class box{
      * @author Enrique Canto <eacm97@hotmail.com>
      * @license GNU General Public License Version 3
      */
-    function render() {// This is necessary? WHY?
-        $this->box .= '
-                    </div>
-                  </nav>
-                </div>
-              </article>
-            </div>';
-        
-        return $this->box;
+    function render() {
+        $box = $this->init.$this->body.$this->end;
+        $this->init = '';
+        $this->body = '';
+        $this->end = '';
+        $this->isRender = TRUE;
+        return $box;
     }
+    
+    /**
+     * qtzl-lib box mediaBox function
+     * @param $image string to set image source
+     * @param $title string to set box title
+     * @param $account string to set box secondary title
+     * @param $timestap string to set a timestamp
+     * @param $text string to set box text
+     * @param $icon string to set box icons from FontAwesome5 library
+     * @return string
+     * @example $box = new box(); $box->mediaBox($image, $title, $account, $timestap, $text, $icon);
+     * @version Bekermeye (1.2007)
+     * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+     * @author Javier Garrido <javier-garrido@live.com>
+     * @author Enrique Canto <eacm97@hotmail.com>
+     * @license GNU General Public License Version 3
+     */
+    function mediaBox($image=NULL, $title=NULL, $account=NULL, $timestap=NULL, $text=NULL, $icon=NULL) {
+        if ($this->isRender == FALSE) {
+                $this->body .= '
+    <article class="media">
+                ';
+                
+                if ($image != NULL){
+                    $this->body .= '
+        <div class="media-left">
+          <figure class="image is-64x64">
+            <img src="'.$image.'" alt="Image">
+          </figure>
+        </div>
+                    ';
+                }
+                
+                $this->body .= '
+        <div class="media-content">
+          <div class="content">
+            <p>
+              <strong>'.$title.'</strong> <small>'.$account.'</small> <small>'.$timestap.'</small>
+              <br>
+              '.$text.'
+            </p>
+          </div>
+          <nav class="level is-mobile">
+            <div class="level-left">
+                ';
+                
+                if ($icon != NULL) {
+                    
+                    if (!is_array($icon)) {
+                        
+                        $icon = array($icon);
+                    }
+                    
+                    for ($i = 0; $i < count($icon); $i++) {
+                        $this->body .= '
+              <a class="level-item" aria-label="'.$icon[$i].'">
+                <span class="icon is-small">
+                  <i class="fas fa-'.$icon[$i].'" aria-hidden="true"></i>
+                </span>
+              </a>
+                        ';
+                    }
+                }
+                
+                $this->body .= '
+            </div>
+          </nav>
+        </div>
+    </article>
+                ';
+                
+            }
+        }
+       
 }

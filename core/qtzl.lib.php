@@ -305,13 +305,13 @@ class form{
  * @license GNU General Public License Version 3
  */
 class columns{
-    function __construct(){
-        
-    }
+
 }
 
 /**
  * qtzl-lib class box
+ * @desc is simply a container with a shadow, a border, 
+ * a radius, and some padding.
  * @version Bekermeye (1.2007)
  * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
  * @author Javier Garrido <javier-garrido@live.com>
@@ -323,18 +323,30 @@ class box{
     private $body = '';
     private $end = '';
     private $isRender = FALSE;
+    
+    /**
+     * qtzl-lib class box
+     * @desc creates a box and initializes the html code
+     * @example $box = new box();
+     * @version Bekermeye (1.2007)
+     * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+     * @author Javier Garrido <javier-garrido@live.com>
+     * @author Enrique Canto <eacm97@hotmail.com>
+     * @license GNU General Public License Version 3
+     */
     function __construct() {
         $this->init = '
 <div class="box">
-    ';
+        ';
         $this->end = '
 </div>
-    ';
+        ';
     }
     
     /**
      * qtzl-lib box addItem function
-     * @return string
+     * @desc adds a single or an array of items into the box 
+     * @param $item string to add a new element to the box
      * @example $box = new box(); $box->addItem($item);
      * @version Bekermeye (1.2007)
      * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
@@ -361,6 +373,7 @@ class box{
     
     /**
      * qtzl-lib box render function
+     * @desc assembles all parts of the box and returns all the html code
      * @return string
      * @example $box = new box(); $box->render();
      * @version Bekermeye (1.2007)
@@ -370,23 +383,22 @@ class box{
      * @license GNU General Public License Version 3
      */
     function render() {
-        $box = $this->init.$this->body.$this->end;
-        $this->init = '';
-        $this->body = '';
-        $this->end = '';
-        $this->isRender = TRUE;
-        return $box;
+        if ($this->isRender == FALSE) {
+            $box = $this->init.$this->body.$this->end;
+            $this->isRender = TRUE;
+            return $box;
+        }
     }
     
     /**
      * qtzl-lib box mediaBox function
+     * @desc creates a customizable media box template
      * @param $image string to set image source
      * @param $title string to set box title
      * @param $account string to set box secondary title
      * @param $timestap string to set a timestamp
      * @param $text string to set box text
      * @param $icon string to set box icons from FontAwesome5 library
-     * @return string
      * @example $box = new box(); $box->mediaBox($image, $title, $account, $timestap, $text, $icon);
      * @version Bekermeye (1.2007)
      * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>

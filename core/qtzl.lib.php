@@ -146,8 +146,10 @@ class engine{
  */
 class navbar{
     var $navbar;
-    var $logo = QTZL_logo;
-    var $mode = 'navbar';
+    var $logo       = QTZL_logo;
+    var $mode       = 'navbar';
+    var $menus      = NULL;
+    var $submenus   = NULL;
     
     /**
      * qtzl-lib navbar class
@@ -230,41 +232,128 @@ class navbar{
                 break;
             default:
                 $this->mode = $this->mode.' is-light';
-                break;                
+                break;
         }
         $this->navbar='
 <nav class="'.$this->mode.'" role="navigation" aria-label="main navigation">
-    <div class="navbar-start">
+    <div class="navbar-brand">
         <a class="navbar-item">
             <img src="'.$this->logo.'" width="112" height="28">
         </a>
         <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navibar">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>';
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>';
     }
     //FIXME
     function autonavbar($dir,$company_name=NULL,$logo=NULL){
         
-
+        
     }
     
     
-    function manualnavbar($menu){
+    function manualnavbar(){
         $this->navbar.='
-        <div id="navibar" class="navbar-menu">
-            <div class="navbar-start">';
+    <div id="navibar" class="navbar-menu">
+        <div class="navbar-start">';
+        if ($this->menu==NULL) {
+            //FIXME
+            echo "you must add menus first";
+            die();
+        }else{
+            $i=0;
+            while ($i<count($this->menu)) {
+                $ii=0;
+                if($this->submenus[$this->menu[$i]]==NULL){
+                    $this->navbar.= '
+            <a class="navbar-item" href="'.$this->href[$this->menu[$i]][0].'">
+                '.$this->menu[$i].'
+            </a>';
+                }else{
+                    $this->navbar.='
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    '.$this->menu[$i].'
+                </a>
+                <div class="navbar-dropdown">';
+                    while ($ii<=(count($this->submenus[$this->menu[$i]]))-1) {
+                        $this->navbar.='
+                    <a class="navbar-item" href="'.$this->href[$this->menu[$i]][$ii].'">
+                        '.$this->submenus[$this->menu[$i]][$ii].'
+                    </a>';
+                        $ii++;
+                    }
+                    $this->navbar.='
+                </div>
+            </div>
+        </div>';
+                }
+                $i++;
+            }
+        }
         
         $this->navbar.='
-            </div>
+        <div class="navbar-end">
         </div>
-    </div>
-</nav>';
+        </div>
+</nav>
+<script>
+document.addEventListener(\'DOMContentLoaded\', () => {
+            
+	  // Get all "navbar-burger" elements
+	  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll(\'.navbar-burger\'), 0);
+            
+	  // Check if there are any navbar burgers
+	  if ($navbarBurgers.length > 0) {
+            
+	    // Add a click event on each of them
+	    $navbarBurgers.forEach( el => {
+	      el.addEventListener(\'click\', () => {
+            
+	        // Get the target from the "data-target" attribute
+	        const target = el.dataset.target;
+	        const $target = document.getElementById(target);
+            
+	        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+	        el.classList.toggle(\'is-active\');
+	        $target.classList.toggle(\'is-active\');
+            
+	      });
+	    });
+	  }
+            
+	});
+</script>';
         
         return $this->navbar;
     }
-
+    
+    function addmenu($menu,$submenu,$href){
+        unset($this->submenus[0]);
+        if (!isset($this->submenus[$menu])) {
+            if ($submenu==NULL) {
+                $this->submenus[$menu]= $submenu;
+            }else{
+                $this->submenus[$menu][]= $submenu;
+            }
+        }else{
+            $this->submenus[$menu][]= $submenu;
+        }
+        if (!isset($this->href[$menu])) {
+            if ($href==NULL) {
+                $this->href[$menu]= $href;
+            }else{
+                $this->href[$menu][]= $href;
+            }
+            
+        }else{
+            $this->href[$menu][]= $href;
+        }
+        $this->menu = array_keys($this->submenus);
+    }
+    
 }
 
 /**

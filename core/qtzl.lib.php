@@ -365,9 +365,43 @@ document.addEventListener(\'DOMContentLoaded\', () => {
  * @license GNU General Public License Version 3
  */
 class button{
-    function __construct(){
+    private $text = '';
+    private $class = '';
+    private $html = '';
+    
+    function __construct($text=NULL, $mods=NULL){
+        $this->text = $text;
+        $this->class = $mods;
+        $this->html = '<button class="button';
         
+        if ($this->class != NULL) {
+            if (!is_array($this->class)) {
+                $this->class = array($this->class);
+            }
+            
+            for ($i = 0; $i < count($this->class); $i++) {
+                $concat = ' is-'.$this->class[$i];
+                $this->html .= $concat;
+            }
+            
+        }
         
+        $this->html .= '">';
+    }
+    
+    function addIcon($icon, $size=NULL) {
+        //FIXME add feature to add icons to the right of the text
+        $this->html .= '
+        <span class="icon '.$size.'">
+        <i class="fas fa-'.$icon.'"></i>
+        </span>
+        ';
+    }
+    
+    function render() {
+        $concat = '<span>'.$this->text.'</span>';
+        $this->html .= $concat.'</button>';
+        return $this->html;
     }
 }
 

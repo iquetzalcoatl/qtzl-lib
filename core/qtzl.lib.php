@@ -287,17 +287,17 @@ class navbar{
                     }
                     $this->navbar.='
                 </div>
-            </div>
-        </div>';
+            </div>';
                 }
                 $i++;
             }
         }
         
         $this->navbar.='
+        </div>
         <div class="navbar-end">
         </div>
-        </div>
+    </div>
 </nav>
 <script>
 document.addEventListener(\'DOMContentLoaded\', () => {

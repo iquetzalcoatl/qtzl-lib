@@ -115,10 +115,7 @@ class engine{
 </head>
 <body>
 <script src="'.$this->js.'"></script>
-</body>
-</html>
 ';
-        return $this->html;
     }
     
     /**
@@ -252,8 +249,7 @@ class navbar{
         
         
     }
-    
-    
+        
     function manualnavbar(){
         $this->navbar.='
     <div id="navibar" class="navbar-menu">

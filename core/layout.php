@@ -272,7 +272,20 @@ class mediaObject{//FIXME add templates to the class
 </article>
 ';
     }
-    
+    /**
+     * qtzl-lib mediaObject addItem function
+     * @desc adds a single or an array of items into the mediaObject
+     * @param $item string to add a new element to the mediaObject
+     * @param $align string to set the alignment of the new element
+     * <li><b>left</b></li>
+     * <li><b>right</b></li>
+     * @example $media = new mediaObject(); $mediaObject->addItem($item, $align);
+     * @version Bekermeye (1.2007)
+     * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+     * @author Javier Garrido <javier-garrido@live.com>
+     * @author Enrique Canto <eacm97@hotmail.com>
+     * @license GNU General Public License Version 3
+     */
     function addItem($item=NULL, $align=NULL){
         if ($this->isRender==FALSE) {
             
@@ -309,10 +322,10 @@ class mediaObject{//FIXME add templates to the class
     }
     
     /**
-     * qtzl-lib level render function
-     * @desc assembles all parts of the level and returns all the html code
+     * qtzl-lib mediaObject render function
+     * @desc assembles all parts of the mediaObject and returns all the html code
      * @return string
-     * @example $level = new level(); $level->render();
+     * @example $mediaObject = new mediaObject(); $mediaObject->render();
      * @version Bekermeye (1.2007)
      * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
      * @author Javier Garrido <javier-garrido@live.com>

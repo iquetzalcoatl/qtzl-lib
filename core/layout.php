@@ -44,11 +44,11 @@ class container{
      */
     function __construct($class=NULL) {
         if ($class!=NULL) {
-            $class = 'is-'.$class;
+            $class = ' is-'.$class;
         }
         
         $this->init = '
-<div class="container '.$class.'">
+<div class="container'.$class.'">
         ';
         $this->end = '
 </div>
@@ -132,10 +132,10 @@ class level{//FIXME add templates to the class
      */
     function __construct($class=NULL) {
         if ($class!=NULL) {
-            $class = 'is-'.$class;
+            $class = ' is-'.$class;
         }
         $this->init = '
-<nav class="level">
+<nav class="level'.$class.'">
 ';
         $this->end = '
 </nav>
@@ -247,8 +247,300 @@ class level{//FIXME add templates to the class
  * @author Enrique Canto <eacm97@hotmail.com>
  * @license GNU General Public License Version 3
  */
-class mediaObject{
+class mediaObject{//FIXME add templates to the class
+    private $init = '';
+    private $mediaLeft = '';
+    private $mediaCont = '';
+    private $mediaRight = '';
+    private $end = '';
+    private $isRender = FALSE;
     
+    /**
+     * qtzl-lib class mediaObject
+     * @example $mediaObject = new mediaObject();
+     * @version Bekermeye (1.2007)
+     * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+     * @author Javier Garrido <javier-garrido@live.com>
+     * @author Enrique Canto <eacm97@hotmail.com>
+     * @license GNU General Public License Version 3
+     */
+    function __construct() {
+        $this->init = '
+<article class="media">
+';
+        $this->end = '
+</article>
+';
+    }
+    
+    function addItem($item=NULL, $align=NULL){
+        if ($this->isRender==FALSE) {
+            
+            if ($item!=NULL) {
+                if (!is_array($item)) {
+                    
+                    $item = array($item);
+                }
+                
+                if ($align==NULL) {
+                    for ($i = 0; $i < count($item); $i++) {
+                        
+                        $this->mediaCont .= $item[$i];
+                    }
+                } else {
+                    if ($align=='right' || $align=='left') {
+                        $mediaAlign = '';
+                        for ($i = 0; $i < count($item); $i++) {
+                            
+                            $mediaAlign .= $item[$i];
+                        }
+                        
+                        if ($align=='right') {
+                            $this->mediaRight .= $mediaAlign;
+                        } elseif ($align=='left') {
+                            $this->mediaLeft .= $mediaAlign;
+                        }
+                    }
+                    
+                }
+                
+            }
+        }
+    }
+    
+    /**
+     * qtzl-lib level render function
+     * @desc assembles all parts of the level and returns all the html code
+     * @return string
+     * @example $level = new level(); $level->render();
+     * @version Bekermeye (1.2007)
+     * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+     * @author Javier Garrido <javier-garrido@live.com>
+     * @author Enrique Canto <eacm97@hotmail.com>
+     * @license GNU General Public License Version 3
+     */
+    function render() {
+        if ($this->mediaLeft!=NULL) {
+            $mediaAlign = '
+ <div class="media-left">
+';
+            $mediaAlign .= $this->mediaLeft;
+            $mediaAlign .= '
+ </div>
+';
+            $this->mediaLeft = $mediaAlign;
+        }
+        if ($this->mediaRight!=NULL) {
+            $mediaAlign = '
+ <div class="media-right">
+';
+            $mediaAlign .= $this->mediaRight;
+            $mediaAlign .= '
+ </div>
+';
+            $this->mediaRight = $mediaAlign;
+        }
+        if ($this->mediaCont!=NULL) {
+            $mediaAlign = '
+ <div class="media-content">
+';
+            $mediaAlign .= $this->mediaCont;
+            $mediaAlign .= '
+ </div>
+';
+            $this->mediaCont = $mediaAlign;
+        }
+        $body = $this->mediaLeft.$this->mediaCont.$this->mediaRight;
+        $mediaObject = $this->init.$body.$this->end;
+        $this->isRender = TRUE;
+        return $mediaObject;
+    }
 }
 
+/**
+ * qtzl-lib class hero
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
+class hero{//FIXME finish this class
+}
+
+/**
+ * qtzl-lib class section
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
+class section{
+    private $init = '';
+    private $body = '';
+    private $end = '';
+    private $isRender = FALSE;
+    
+    /**
+     * qtzl-lib class section
+     * @param $class string to select the type of modifier of the section
+     * <li><b>medium</b></li>
+     * <li><b>large</b></li>
+     * @example $section = new section();
+     * @version Bekermeye (1.2007)
+     * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+     * @author Javier Garrido <javier-garrido@live.com>
+     * @author Enrique Canto <eacm97@hotmail.com>
+     * @license GNU General Public License Version 3
+     */
+    function __construct($class=NULL) {
+        if ($class!=NULL) {
+            $class = ' is-'.$class;
+        }
+        
+        $this->init = '
+<section class="section'.$class.'">
+';
+        $this->end = '
+</section>
+';
+    }
+    
+    /**
+     * qtzl-lib section addItem function
+     * @desc adds a single or an array of items into the section
+     * @param $item string to add a new element to the section
+     * @example $section = new section(); $section->addItem($item);
+     * @version Bekermeye (1.2007)
+     * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+     * @author Javier Garrido <javier-garrido@live.com>
+     * @author Enrique Canto <eacm97@hotmail.com>
+     * @license GNU General Public License Version 3
+     */
+    function addItem($item=NULL) {
+        if ($this->isRender == FALSE) {
+            
+            if ($item != NULL) {
+                if (!is_array($item)) {
+                    $item = array($item);
+                }
+                
+                for ($i = 0; $i < count($item); $i++) {        
+                    $this->body .= $item[$i];
+                }
+            }
+        }
+    }
+    
+    /**
+     * qtzl-lib section render function
+     * @desc assembles all parts of the section and returns all the html code
+     * @return string
+     * @example $section = new section(); $section->render();
+     * @version Bekermeye (1.2007)
+     * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+     * @author Javier Garrido <javier-garrido@live.com>
+     * @author Enrique Canto <eacm97@hotmail.com>
+     * @license GNU General Public License Version 3
+     */
+    function render() {
+        if ($this->isRender == FALSE) {
+            $section = $this->init.$this->body.$this->end;
+            $this->isRender = TRUE;
+            return $section;
+        }
+    }
+}
+
+/**
+ * qtzl-lib class footer
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
+class footer{
+    private $init = '';
+    private $body = '';
+    private $end = '';
+    private $isRender = FALSE;
+    
+    /**
+     * qtzl-lib footer section
+     * @example $footer = new footer();
+     * @version Bekermeye (1.2007)
+     * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+     * @author Javier Garrido <javier-garrido@live.com>
+     * @author Enrique Canto <eacm97@hotmail.com>
+     * @license GNU General Public License Version 3
+     */
+    function __construct() {
+
+        $this->init = '
+<footer class="footer">
+';
+        $this->end = '
+</footer>
+';
+    }
+    
+    /**
+     * qtzl-lib footer addItem function
+     * @desc adds a single or an array of items into the footer
+     * @param $item string to add a new element to the footer
+     * @example $section = new footer(); $footer->addItem($item);
+     * @version Bekermeye (1.2007)
+     * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+     * @author Javier Garrido <javier-garrido@live.com>
+     * @author Enrique Canto <eacm97@hotmail.com>
+     * @license GNU General Public License Version 3
+     */
+    function addItem($item=NULL) {
+        if ($this->isRender == FALSE) {
+            
+            if ($item != NULL) {
+                if (!is_array($item)) {
+                    $item = array($item);
+                }
+                
+                for ($i = 0; $i < count($item); $i++) {
+                    $this->body .= $item[$i];
+                }
+            }
+        }
+    }
+    
+    /**
+     * qtzl-lib footer render function
+     * @desc assembles all parts of the footer and returns all the html code
+     * @return string
+     * @example $footer = new footer(); $footer->render();
+     * @version Bekermeye (1.2007)
+     * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+     * @author Javier Garrido <javier-garrido@live.com>
+     * @author Enrique Canto <eacm97@hotmail.com>
+     * @license GNU General Public License Version 3
+     */
+    function render() {
+        if ($this->isRender == FALSE) {
+            $section = $this->init.$this->body.$this->end;
+            $this->isRender = TRUE;
+            return $section;
+        }
+    }
+}
+
+/**
+ * qtzl-lib class tile
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
+class tile{//FIXME finish this class
+    
+}
 ?>

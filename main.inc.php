@@ -22,7 +22,7 @@ header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Conten-Type: text/html;charset=utf-8");
 date_default_timezone_set('America/Monterrey');
 
-define('ROOT', basename(__DIR__),TRUE);
+define('ROOT', basename(__DIR__));
 define('ROOT_PATH', str_replace('\\', '/',__DIR__.'/'));
 define('MODULES_PATH',ROOT_PATH.'modules');
 define('ENGINE', ROOT_PATH.'core/qtzl.lib.php');

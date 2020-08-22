@@ -69,9 +69,18 @@ class engine{
             $this->title = $title;
         }
         if ($dir==NULL) {
-            $this->dir = __DIR__;
+            $this->dir = scandir(__DIR__);
         }else{
             $this->dir = $dir;
+        }
+        
+        if (in_array('main.inc.php',$this->dir)) {
+        	$path ='core/';
+        	require_once 'main.inc.php';
+        }else{
+        	var_dump(__DIR__);
+        	$path = '../../core/img';
+        	require_once '../../main.inc.php';
         }
         if ($source==NULL) {
             if (!$sock=@fsockopen('www.google.com',80,$num,$error, 5)) {
@@ -103,6 +112,10 @@ class engine{
 <html'.$this->html_config.'>
 <head>
 	<title>'.$this->title.'</title>
+	<link rel="apple-touch-icon" sizes="180x180" href="'.$path.'img/favicon/apple-touch-ico.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="'.$path.'img/favicon//favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="'.$path.'img/favicon/favicon-16x16.png">
+	<link rel="manifest" href="'.$path.'img/favicon/site.webmanifest">
     <meta name="msapplication-TileColor" content="#F0F0F0">
     <meta name="theme-color" content="#F0F0F0">
     <meta name="apple-mobile-web-app-status-bar-style" content="#F0F0F0">

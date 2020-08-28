@@ -25,11 +25,14 @@ date_default_timezone_set('America/Monterrey');
 define('ROOT', basename(__DIR__));
 define('ROOT_PATH', str_replace('\\', '/',__DIR__.'/'));
 define('MODULES_PATH',ROOT_PATH.'modules');
-define('ENGINE', ROOT_PATH.'core/qtzl.lib.php');
+define('QTZL_ENGINE', ROOT_PATH.'core/qtzl.lib.php');
+define('QTZL_CSS', ROOT_PATH.'core/css/');
+define('QTZL_JS', ROOT_PATH.'core/js/');
+define('QTZL_IMG', ROOT_PATH.'core/img/');
 define('QTZL_ver', '1.2007');
 define('QTZL_codename', 'Bekermeye');
 define('QTZL_company', 'Dev');
-define('QTZL_logo', 'core/logo.png');
+define('QTZL_logo', QTZL_IMG.'logo.png');
 
 define('DEBUG_MODE', TRUE);
 if (DEBUG_MODE!=FALSE) {

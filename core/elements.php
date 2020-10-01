@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (C) 2020 Javier Garrido <javier-garrido@live.com>
  * Copyright (C) 2020 Enrique Canto <eacm97@hotmail.com>
@@ -19,17 +20,20 @@
  * qtzl-lib class box
  * is simply a container with a shadow, a border,
  * a radius, and some padding.
- *
  * @version Bekermeye (1.2007)
  * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
  * @author Javier Garrido <javier-garrido@live.com>
  * @author Enrique Canto <eacm97@hotmail.com>
  * @license GNU General Public License Version 3
  */
-class box {
+class box{
+
 	private $init = '';
+
 	private $body = '';
+
 	private $end = '';
+
 	private $isRender = FALSE;
 
 	/**
@@ -42,18 +46,19 @@ class box {
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function __construct() {
+	function __construct(){
+
 		$this->init = '
 <div class="box">';
 		$this->end = '
 </div>';
+
 	}
 
 	/**
 	 * qtzl-lib box addItem function
 	 * adds a single or an array of items into the box
-	 * @param $item string
-	 * to add a new element to the box
+	 * @param $item string to add a new element to the box
 	 * @example $box = new box(); $box->addItem($item);
 	 * @version Bekermeye (1.2007)
 	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
@@ -61,23 +66,23 @@ class box {
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function addItem($item = NULL) {
-		if ($this->isRender == FALSE) {
+	function addItem($item = NULL){
 
-			if ($item != NULL) {
-				if (! is_array ( $item )) {
+		if($this->isRender==FALSE){
 
-					$item = array (
-							$item
-					);
+			if($item!=NULL){
+				if(!is_array($item)){
+
+					$item = array($item);
 				}
 
-				for($i = 0; $i < count ( $item ); $i ++) {
+				for($i = 0;$i<count($item);$i++){
 
-					$this->body .= $item [$i];
+					$this->body .= $item[$i];
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -91,41 +96,45 @@ class box {
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render() {
-		if ($this->isRender == FALSE) {
-			$box = $this->init . $this->body . $this->end;
+	function render(){
+
+		if($this->isRender==FALSE){
+			$box = $this->init.$this->body.$this->end;
 			$this->isRender = TRUE;
 			return $box;
 		}
+
 	}
 
 	/**
 	 * qtzl-lib box mediaBox function
 	 * creates a customizable media box template
-
 	 * @param $image string to set image source
 	 * @param $title stringto set box title
 	 * @param $account string to set box secondary title
 	 * @param $timestap string to set a timestamp
 	 * @param $text string to set box text
 	 * @param $icon string to set box icons from FontAwesome5 library
-	 * @example $box = new box(); $box->mediaBox($image, $title, $account, $timestap, $text, $icon);
+	 * @example $box = new box(); $box->mediaBox($image, $title, $account,
+	 * $timestap, $text, $icon);
 	 * @version Bekermeye (1.2007)
 	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
 	 * @author Javier Garrido <javier-garrido@live.com>
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function mediaBox($image = NULL, $title = NULL, $account = NULL, $timestap = NULL, $text = NULL, $icon = NULL) {
-		if ($this->isRender == FALSE) {
+	function mediaBox($image = NULL,$title = NULL,$account = NULL,
+		$timestap = NULL,$text = NULL,$icon = NULL){
+
+		if($this->isRender==FALSE){
 			$this->body .= '
     <article class="media">';
 
-			if ($image != NULL) {
+			if($image!=NULL){
 				$this->body .= '
 	<div class="media-left">
 		<figure class="image is-64x64">
-			<img src="' . $image . '" alt="Image">
+			<img src="'.$image.'" alt="Image">
 		</figure>
 	</div>';
 			}
@@ -134,28 +143,28 @@ class box {
 	<div class="media-content">
 		<div class="content">
 			<p>
-				<strong>' . $title . '</strong> <small>' . $account . '</small> <small>' . $timestap . '</small>
+				<strong>'.$title.'</strong> <small>'.$account.'</small> <small>'.$timestap.
+				'</small>
 				<br>
-			' . $text . '
+			'.$text.'
 			</p>
 		</div>
 		<nav class="level is-mobile">
 		<div class="level-left">';
 
-			if ($icon != NULL) {
+			if($icon!=NULL){
 
-				if (! is_array ( $icon )) {
+				if(!is_array($icon)){
 
-					$icon = array (
-							$icon
-					);
+					$icon = array($icon);
 				}
 
-				for($i = 0; $i < count ( $icon ); $i ++) {
+				for($i = 0;$i<count($icon);$i++){
 					$this->body .= '
-			<a class="level-item" aria-label="' . $icon [$i] . '">
+			<a class="level-item" aria-label="'.$icon[$i].
+						'">
 				<span class="icon is-small">
-					<i class="fas fa-' . $icon [$i] . '" aria-hidden="true"></i>
+					<i class="fas fa-'.$icon[$i].'" aria-hidden="true"></i>
 				</span>
 			</a>';
 				}
@@ -168,7 +177,9 @@ class box {
     </article>
                 ';
 		}
+
 	}
+
 }
 
 /**
@@ -179,43 +190,56 @@ class box {
  * @author Enrique Canto <eacm97@hotmail.com>
  * @license GNU General Public License Version 3
  */
-class button { // FIXME add documentation and finish the class
+class button{
+
+	// FIXME add documentation and finish the class
 	private $text = '';
+
 	private $class = '';
+
 	private $html = '';
-	function __construct($text = NULL, $mods = NULL) { // FIXME add disabled property
+
+	function __construct($text = NULL,$mods = NULL){
+
+		// FIXME add disabled property
 		$this->text = $text;
 		$this->class = $mods;
 		$this->html = '<button class="button';
 
-		if ($this->class != NULL) {
-			if (! is_array ( $this->class )) {
-				$this->class = array (
-						$this->class
-				);
+		if($this->class!=NULL){
+			if(!is_array($this->class)){
+				$this->class = array($this->class);
 			}
 
-			for($i = 0; $i < count ( $this->class ); $i ++) {
-				$concat = ' is-' . $this->class [$i];
+			for($i = 0;$i<count($this->class);$i++){
+				$concat = ' is-'.$this->class[$i];
 				$this->html .= $concat;
 			}
 		}
 
 		$this->html .= '">';
+
 	}
-	function addIcon($icon, $size = NULL) {
+
+	function addIcon($icon,$size = NULL){
+
 		// FIXME add feature to add icons to the right of the text
 		$this->html .= '
-		<span class="icon ' . $size . '">
-		<i class="fas fa-' . $icon . '"></i>
+		<span class="icon '.$size.'">
+		<i class="fas fa-'.$icon.'"></i>
 		</span>
 		';
+
 	}
-	function render() {
-		$concat = '<span>' . $this->text . '</span>';
-		$this->html .= $concat . '</button>';
+
+	function render(){
+
+		$concat = '<span>'.$this->text.'</span>';
+		$this->html .= $concat.'</button>';
 		return $this->html;
+
 	}
+
 }
 
 ?>

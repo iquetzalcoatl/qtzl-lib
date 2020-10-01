@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (C) 2020 Javier Garrido <javier-garrido@live.com>
  * Copyright (C) 2020 Enrique Canto <eacm97@hotmail.com>
@@ -17,22 +18,24 @@
 
 /**
  * qtzl-lib class container
- *
  * @version Bekermeye (1.2007)
  * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
  * @author Javier Garrido <javier-garrido@live.com>
  * @author Enrique Canto <eacm97@hotmail.com>
  * @license GNU General Public License Version 3
  */
-class container {
+class container{
+
 	private $init = '';
+
 	private $body = '';
+
 	private $end = '';
+
 	private $isRender = FALSE;
 
 	/**
 	 * qtzl-lib class container
-	 *
 	 * @param $class stringto select the type of container
 	 * <li><b>fluid</b></li>
 	 * <li><b>widescreen</b></li>
@@ -44,17 +47,19 @@ class container {
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function __construct($class = NULL) {
-		if ($class != NULL) {
-			$class = ' is-' . $class;
+	function __construct($class = NULL){
+
+		if($class!=NULL){
+			$class = ' is-'.$class;
 		}
 
 		$this->init = '
-<div class="container' . $class . '">
+<div class="container'.$class.'">
         ';
 		$this->end = '
 </div>
         ';
+
 	}
 
 	/**
@@ -68,23 +73,23 @@ class container {
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function addItem($item = NULL) {
-		if ($this->isRender == FALSE) {
+	function addItem($item = NULL){
 
-			if ($item != NULL) {
-				if (! is_array ( $item )) {
+		if($this->isRender==FALSE){
 
-					$item = array (
-							$item
-					);
+			if($item!=NULL){
+				if(!is_array($item)){
+
+					$item = array($item);
 				}
 
-				for($i = 0; $i < count ( $item ); $i ++) {
+				for($i = 0;$i<count($item);$i++){
 
-					$this->body .= $item [$i];
+					$this->body .= $item[$i];
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -98,13 +103,16 @@ class container {
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render() {
-		if ($this->isRender == FALSE) {
-			$box = $this->init . $this->body . $this->end;
+	function render(){
+
+		if($this->isRender==FALSE){
+			$box = $this->init.$this->body.$this->end;
 			$this->isRender = TRUE;
 			return $box;
 		}
+
 	}
+
 }
 
 /**
@@ -115,12 +123,19 @@ class container {
  * @author Enrique Canto <eacm97@hotmail.com>
  * @license GNU General Public License Version 3
  */
-class level { // FIXME add templates to the class
+class level{
+
+	// FIXME add templates to the class
 	private $init = '';
+
 	private $body = '';
+
 	private $lvlLeft = '';
+
 	private $lvlRight = '';
+
 	private $end = '';
+
 	private $isRender = FALSE;
 
 	/**
@@ -134,17 +149,20 @@ class level { // FIXME add templates to the class
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function __construct($class = NULL) {
-		if ($class != NULL) {
-			$class = ' is-' . $class;
+	function __construct($class = NULL){
+
+		if($class!=NULL){
+			$class = ' is-'.$class;
 		}
 		$this->init = '
-<nav class="level' . $class . '">
+<nav class="level'.$class.'">
 ';
 		$this->end = '
 </nav>
 ';
+
 	}
+
 	/**
 	 * qtzl-lib level addItem function
 	 * adds a single or an array of items into the level
@@ -159,47 +177,47 @@ class level { // FIXME add templates to the class
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function addItem($item = NULL, $align = NULL) {
-		if ($this->isRender == FALSE) {
+	function addItem($item = NULL,$align = NULL){
 
-			if ($item != NULL) {
-				if (! is_array ( $item )) {
+		if($this->isRender==FALSE){
 
-					$item = array (
-							$item
-					);
+			if($item!=NULL){
+				if(!is_array($item)){
+
+					$item = array($item);
 				}
 
-				if ($align == NULL) {
-					for($i = 0; $i < count ( $item ); $i ++) {
+				if($align==NULL){
+					for($i = 0;$i<count($item);$i++){
 
 						$this->body .= '
               <div class="level-item has-text-centered">
-                ' . $item [$i] . '
+                '.$item[$i].'
               </div>
             ';
 					}
-				} else {
-					if ($align == 'right' || $align == 'left') {
+				}else{
+					if($align=='right'||$align=='left'){
 						$lvlAlign = '';
-						for($i = 0; $i < count ( $item ); $i ++) {
+						for($i = 0;$i<count($item);$i++){
 
 							$lvlAlign .= '
     <div class="level-item">
-        ' . $item [$i] . '
+        '.$item[$i].'
     </div>
 ';
 						}
 
-						if ($align == 'right') {
+						if($align=='right'){
 							$this->lvlRight .= $lvlAlign;
-						} elseif ($align == 'left') {
+						}elseif($align=='left'){
 							$this->lvlLeft .= $lvlAlign;
 						}
 					}
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -213,9 +231,10 @@ class level { // FIXME add templates to the class
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render() {
-		if ($this->isRender == FALSE) {
-			if ($this->lvlLeft != NULL) {
+	function render(){
+
+		if($this->isRender==FALSE){
+			if($this->lvlLeft!=NULL){
 				$lvlAlign = '
  <div class="level-left">
 ';
@@ -225,7 +244,7 @@ class level { // FIXME add templates to the class
 ';
 				$this->lvlLeft = $lvlAlign;
 			}
-			if ($this->lvlRight != NULL) {
+			if($this->lvlRight!=NULL){
 				$lvlAlign = '
  <div class="level-right">
 ';
@@ -235,12 +254,14 @@ class level { // FIXME add templates to the class
 ';
 				$this->lvlRight = $lvlAlign;
 			}
-			$this->body = $this->lvlLeft . $this->body . $this->lvlRight;
-			$level = $this->init . $this->body . $this->end;
+			$this->body = $this->lvlLeft.$this->body.$this->lvlRight;
+			$level = $this->init.$this->body.$this->end;
 			$this->isRender = TRUE;
 			return $level;
 		}
+
 	}
+
 }
 
 /**
@@ -251,12 +272,19 @@ class level { // FIXME add templates to the class
  * @author Enrique Canto <eacm97@hotmail.com>
  * @license GNU General Public License Version 3
  */
-class mediaObject { // FIXME add templates to the class
+class mediaObject{
+
+	// FIXME add templates to the class
 	private $init = '';
+
 	private $mediaLeft = '';
+
 	private $mediaCont = '';
+
 	private $mediaRight = '';
+
 	private $end = '';
+
 	private $isRender = FALSE;
 
 	/**
@@ -268,63 +296,65 @@ class mediaObject { // FIXME add templates to the class
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function __construct() {
+	function __construct(){
+
 		$this->init = '
 <article class="media">
 ';
 		$this->end = '
 </article>
 ';
+
 	}
+
 	/**
 	 * qtzl-lib mediaObject addItem function
 	 * adds a single or an array of items into the mediaObject
-	 *
 	 * @param $item string to add a new element to the mediaObject
-	 * @param $align string
-	 * to set the alignment of the new element
+	 * @param $align string to set the alignment of the new element
 	 * <li><b>left</b></li>
 	 * <li><b>right</b></li>
-	 * @example $media = new mediaObject(); $mediaObject->addItem($item, $align);
+	 * @example $media = new mediaObject(); $mediaObject->addItem($item,
+	 * $align);
 	 * @version Bekermeye (1.2007)
 	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
 	 * @author Javier Garrido <javier-garrido@live.com>
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function addItem($item = NULL, $align = NULL) {
-		if ($this->isRender == FALSE) {
+	function addItem($item = NULL,$align = NULL){
 
-			if ($item != NULL) {
-				if (! is_array ( $item )) {
+		if($this->isRender==FALSE){
 
-					$item = array (
-							$item
-					);
+			if($item!=NULL){
+				if(!is_array($item)){
+
+					$item = array($item);
 				}
 
-				if ($align == NULL) {
-					for($i = 0; $i < count ( $item ); $i ++) {
+				if($align==NULL){
+					for($i = 0;$i<count($item);$i++){
 
-						$this->mediaCont .= $item [$i];
+						$this->mediaCont .= $item[$i];
 					}
-				} else {
-					if ($align == 'right' || $align == 'left') {
+				}else{
+					if($align=='right'||$align=='left'){
 						$mediaAlign = '';
-						for($i = 0; $i < count ( $item ); $i ++) {
+						for($i = 0;$i<count($item);$i++){
 
-							$mediaAlign .= $item [$i];
+							$mediaAlign .= $item[$i];
 						}
 
-						if ($align == 'right') {
+						if($align=='right'){
 							$this->mediaRight .= $mediaAlign;
-						} elseif ($align == 'left') {
+						}elseif($align=='left'){
 							$this->mediaLeft .= $mediaAlign;
 						}
 					}
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -338,8 +368,9 @@ class mediaObject { // FIXME add templates to the class
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render() {
-		if ($this->mediaLeft != NULL) {
+	function render(){
+
+		if($this->mediaLeft!=NULL){
 			$mediaAlign = '
  <div class="media-left">
 ';
@@ -349,7 +380,7 @@ class mediaObject { // FIXME add templates to the class
 ';
 			$this->mediaLeft = $mediaAlign;
 		}
-		if ($this->mediaRight != NULL) {
+		if($this->mediaRight!=NULL){
 			$mediaAlign = '
  <div class="media-right">
 ';
@@ -359,7 +390,7 @@ class mediaObject { // FIXME add templates to the class
 ';
 			$this->mediaRight = $mediaAlign;
 		}
-		if ($this->mediaCont != NULL) {
+		if($this->mediaCont!=NULL){
 			$mediaAlign = '
  <div class="media-content">
 ';
@@ -369,11 +400,13 @@ class mediaObject { // FIXME add templates to the class
 ';
 			$this->mediaCont = $mediaAlign;
 		}
-		$body = $this->mediaLeft . $this->mediaCont . $this->mediaRight;
-		$mediaObject = $this->init . $body . $this->end;
+		$body = $this->mediaLeft.$this->mediaCont.$this->mediaRight;
+		$mediaObject = $this->init.$body.$this->end;
 		$this->isRender = TRUE;
 		return $mediaObject;
+
 	}
+
 }
 
 /**
@@ -384,7 +417,9 @@ class mediaObject { // FIXME add templates to the class
  * @author Enrique Canto <eacm97@hotmail.com>
  * @license GNU General Public License Version 3
  */
-class hero { // FIXME finish this class
+class hero{
+
+	// FIXME finish this class
 }
 
 /**
@@ -395,16 +430,19 @@ class hero { // FIXME finish this class
  * @author Enrique Canto <eacm97@hotmail.com>
  * @license GNU General Public License Version 3
  */
-class section {
+class section{
+
 	private $init = '';
+
 	private $body = '';
+
 	private $end = '';
+
 	private $isRender = FALSE;
 
 	/**
 	 * qtzl-lib class section
-	 * @param $class string
-	 * to select the type of modifier of the section
+	 * @param $class string to select the type of modifier of the section
 	 * <li><b>medium</b></li>
 	 * <li><b>large</b></li>
 	 * @example $section = new section();
@@ -414,17 +452,19 @@ class section {
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function __construct($class = NULL) {
-		if ($class != NULL) {
-			$class = ' is-' . $class;
+	function __construct($class = NULL){
+
+		if($class!=NULL){
+			$class = ' is-'.$class;
 		}
 
 		$this->init = '
-<section class="section' . $class . '">
+<section class="section'.$class.'">
 ';
 		$this->end = '
 </section>
 ';
+
 	}
 
 	/**
@@ -438,21 +478,21 @@ class section {
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function addItem($item = NULL) {
-		if ($this->isRender == FALSE) {
+	function addItem($item = NULL){
 
-			if ($item != NULL) {
-				if (! is_array ( $item )) {
-					$item = array (
-							$item
-					);
+		if($this->isRender==FALSE){
+
+			if($item!=NULL){
+				if(!is_array($item)){
+					$item = array($item);
 				}
 
-				for($i = 0; $i < count ( $item ); $i ++) {
-					$this->body .= $item [$i];
+				for($i = 0;$i<count($item);$i++){
+					$this->body .= $item[$i];
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -466,13 +506,16 @@ class section {
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render() {
-		if ($this->isRender == FALSE) {
-			$section = $this->init . $this->body . $this->end;
+	function render(){
+
+		if($this->isRender==FALSE){
+			$section = $this->init.$this->body.$this->end;
 			$this->isRender = TRUE;
 			return $section;
 		}
+
 	}
+
 }
 
 /**
@@ -483,10 +526,14 @@ class section {
  * @author Enrique Canto <eacm97@hotmail.com>
  * @license GNU General Public License Version 3
  */
-class footer {
+class footer{
+
 	private $init = '';
+
 	private $body = '';
+
 	private $end = '';
+
 	private $isRender = FALSE;
 
 	/**
@@ -498,19 +545,20 @@ class footer {
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function __construct() {
+	function __construct(){
+
 		$this->init = '
 <footer class="footer">
 ';
 		$this->end = '
 </footer>
 ';
+
 	}
 
 	/**
 	 * qtzl-lib footer addItem function
 	 * adds a single or an array of items into the footer
-	 *
 	 * @param $item string to add a new element to the footer
 	 * @example $section = new footer(); $footer->addItem($item);
 	 * @version Bekermeye (1.2007)
@@ -519,21 +567,21 @@ class footer {
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function addItem($item = NULL) {
-		if ($this->isRender == FALSE) {
+	function addItem($item = NULL){
 
-			if ($item != NULL) {
-				if (! is_array ( $item )) {
-					$item = array (
-							$item
-					);
+		if($this->isRender==FALSE){
+
+			if($item!=NULL){
+				if(!is_array($item)){
+					$item = array($item);
 				}
 
-				for($i = 0; $i < count ( $item ); $i ++) {
-					$this->body .= $item [$i];
+				for($i = 0;$i<count($item);$i++){
+					$this->body .= $item[$i];
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -547,13 +595,16 @@ class footer {
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render() {
-		if ($this->isRender == FALSE) {
-			$section = $this->init . $this->body . $this->end;
+	function render(){
+
+		if($this->isRender==FALSE){
+			$section = $this->init.$this->body.$this->end;
 			$this->isRender = TRUE;
 			return $section;
 		}
+
 	}
+
 }
 
 /**
@@ -564,6 +615,8 @@ class footer {
  * @author Enrique Canto <eacm97@hotmail.com>
  * @license GNU General Public License Version 3
  */
-class tile { // FIXME finish this class
+class tile{
+
+	// FIXME finish this class
 }
 ?>

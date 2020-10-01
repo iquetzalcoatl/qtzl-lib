@@ -33,8 +33,6 @@ function qtzl_location(){
 
 }
 
-require_once qtzl_location().'main.inc.php';
-
 /**
  * qtzl-lib class engine
  * @version Bekermeye (1.2007)
@@ -158,7 +156,7 @@ class engine{
 
 	}
 
-	function __destruct(){
+	function render(){
 
 		echo $this->html;
 

@@ -15,6 +15,24 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+function qtzl_location(){
+	$location = str_replace('\\', '/',getcwd());
+	$location = strstr($location,ROOT);
+	$location = explode('/', $location);
+	$relpath = $location;
+	foreach ($location as $path => $dir){
+		if (ROOT===$location[$path]) {
+			array_shift($relpath);
+		}else{
+			$relpath = str_replace($location[$path], '..', $relpath);
+		}
+	}
+	$relpath = implode('/', $relpath).'/';
+	return $relpath;
+}
+
+require_once qtzl_location().'main.inc.php';
+
 /**
  * qtzl-lib class engine
  * @version Bekermeye (1.2007)
@@ -23,12 +41,13 @@
  * @author Enrique Canto <eacm97@hotmail.com>
  * @license GNU General Public License Version 3
  */
-class engine {
+class engine{
 	var $title;
 	var $dir;
 	var $html;
 	private $css;
 	private $map;
+
 	function __construct($navbar = NULL, $icons = NULL, $lang = 'es') {
 		if ($navbar == NULL) {
 			$this->navbar = ' class="has-navbar-fixed-top';
@@ -61,25 +80,11 @@ class engine {
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function load($title = NULL, $dir = NULL, $source = NULL) {
+	function load($title = NULL,$source = NULL) {
 		if ($title == NULL) {
-			$this->title = 'main';
-		} else {
+			$this->title = ucwords(basename(__FILE__,'.php'));
+		}else{
 			$this->title = $title;
-		}
-		if ($dir == NULL) {
-			$this->dir = scandir ( __DIR__ );
-		} else {
-			$this->dir = $dir;
-		}
-
-		if (in_array ( 'main.inc.php', $this->dir )) {
-			$path = 'core/';
-			require_once 'main.inc.php';
-		} else {
-			var_dump ( __DIR__ );
-			$path = '../../core/img';
-			require_once '../../main.inc.php';
 		}
 		if ($source == NULL) {
 			if (! $sock = @fsockopen ( 'www.google.com', 80, $num, $error, 5 )) {
@@ -102,19 +107,26 @@ class engine {
 			$this->map = 'https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.css.map';
 			$this->js = 'https://kit.fontawesome.com/df83b7e0ad.js" crossorigin="anonymous';
 		} else {
-			$this->css = 'css/bulma.css';
-			$this->map = 'css/bulma.css.map';
-			$this->js = 'js/fontsawesome.js';
+			$this->css = qtzl_location().'core/css/bulma.css';
+			$this->map = qtzl_location().'core/css/bulma.css.map';
+			$this->js = qtzl_location().'core/js/fontsawesome.js';
 		}
+		if (in_array('main.inc.php', scandir(getcwd()))) {
+			$this->path = '';
+		}else{
+			$this->path = qtzl_location();
+		}
+
+
 		$this->html = '
 <!DOCTYPE html>
 <html' . $this->html_config . '>
 <head>
 	<title>' . $this->title . '</title>
-	<link rel="apple-touch-icon" sizes="180x180" href="' . $path . 'img/favicon/apple-touch-ico.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="' . $path . 'img/favicon//favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="' . $path . 'img/favicon/favicon-16x16.png">
-	<link rel="manifest" href="' . $path . 'img/favicon/site.webmanifest">
+	<link rel="apple-touch-icon" sizes="180x180" href="'.$this->path.'core/img/favicon/apple-touch-ico.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="'.$this->path. 'core/img/favicon//favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="'.$this->path. 'core/img/favicon/favicon-16x16.png">
+	<link rel="manifest" href="'.$this->path.'core/img/favicon/site.webmanifest">
 	<meta name="msapplication-TileColor" content="#F0F0F0">
 	<meta name="theme-color" content="#F0F0F0">
 	<meta name="apple-mobile-web-app-status-bar-style" content="#F0F0F0">
@@ -122,25 +134,15 @@ class engine {
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="' . $this->css . '">
-	<link rel="stylesheet" type="text/css" href="' . $this->map . '">
+	<link rel="stylesheet" type="text/css" href="'.$this->css.'">
+
 </head>
 <body>
-<script src="' . $this->js . '"></script>
+<script src="'.$this->js.'"></script>
 ';
 	}
 
-	/**
-	 * qtzl-lib engine render function
-	 * @return string
-	 * @example $engine = new engine(); $engine->render();
-	 * @version Bekermeye (1.2007)
-	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
-	 * @author Javier Garrido <javier-garrido@live.com>
-	 * @author Enrique Canto <eacm97@hotmail.com>
-	 * @license GNU General Public License Version 3
-	 */
-	function render() {
+	function __destruct(){
 		echo $this->html;
 	}
 }
@@ -153,9 +155,8 @@ class engine {
  * @author Enrique Canto <eacm97@hotmail.com>
  * @license GNU General Public License Version 3
  */
-class navbar {
+class navbar{
 	var $navbar;
-	var $logo = QTZL_logo;
 	var $mode = 'navbar';
 	var $menus = NULL;
 	var $submenus = NULL;
@@ -190,6 +191,11 @@ class navbar {
 	 * @license GNU General Public License Version 3
 	 */
 	function __construct($mode = NULL, $color = NULL) {
+		if (in_array('main.inc.php', scandir(getcwd()))) {
+			$this->logo = 'core/img/logo.png';
+		}else{
+			$this->logo = qtzl_location().'core/img/logo.png';
+		}
 		switch ($mode) {
 			case 'fixedtop' :
 				$this->mode = 'navbar is-fixed-top';
@@ -261,6 +267,7 @@ class navbar {
 	// FIXME
 	function autonavbar($dir, $company_name = NULL, $logo = NULL) {
 	}
+
 	function manualnavbar() {
 		$this->navbar .= '
     <div id="navibar" class="navbar-menu">
@@ -363,7 +370,7 @@ document.addEventListener(\'DOMContentLoaded\', () => {
  * @author Enrique Canto <eacm97@hotmail.com>
  * @license GNU General Public License Version 3
  */
-class button {
+class button{
 	private $text = '';
 	private $class = '';
 	private $html = '';
@@ -410,7 +417,7 @@ class button {
  * @author Enrique Canto <eacm97@hotmail.com>
  * @license GNU General Public License Version 3
  */
-class form {
+class form{
 	function __construct() {
 	}
 }
@@ -423,11 +430,11 @@ class form {
  * @author Enrique Canto <eacm97@hotmail.com>
  * @license GNU General Public License Version 3
  */
-class columns {
+class columns{
 }
 
 /**
- * qtzl-lib class box is simply a container with a shadow, 
+ * qtzl-lib class box is simply a container with a shadow,
  * a border,a radius, and some padding.
  * @version Bekermeye (1.2007)
  * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
@@ -435,7 +442,7 @@ class columns {
  * @author Enrique Canto <eacm97@hotmail.com>
  * @license GNU General Public License Version 3
  */
-class box {
+class box{
 	private $init = '';
 	private $body = '';
 	private $end = '';
@@ -587,5 +594,114 @@ class box {
     </article>
                 ';
 		}
+	}
+}
+
+
+class dropdown{
+
+	protected $is;
+	protected $title;
+	public $dropdown;
+	protected $arrow;
+	protected $item;
+	protected $href;
+
+	function __construct($is=NULL,$title=NULL){
+		switch ($is){
+			case 'active':
+				$this->is=' is-active';
+				$this->arrow = 'fas fa-angle-down';
+				break;
+			case 'right':
+				$this->is=' is-active is-right';
+				$this->arrow = 'fas fa-angle-down';
+				break;
+			case 'left':
+				$this->is=' is-active is-left';
+				$this->arrow = 'fas fa-angle-down';
+				break;
+			case 'up':
+				$this->is = ' is -active is-up';
+				$this->arrow = 'fas fa-angle-up';
+				break;
+			default:
+				$this->is='';
+				$this->arrow = 'fas fa-angle-down';
+				break;
+		}
+		if ($title==NULL) {
+			$this->title = 'Dropdown button';
+		}else{
+			$this->title = $title;
+		}
+		$this->dropdown = '
+<div class="dropdown'.$this->is.'">
+	<div class="dropdown-trigger">
+		<button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+			<span>'.$this->title.' </span>
+			<span class="icon is-small">
+			<i class="'.$this->arrow.'" aria-hidden="true"></i>
+			</span>
+		</button>
+	</div>
+	<div class="dropdown-menu" id="dropdown-menu" role="menu">
+		<div class="dropdown-content">';
+	}
+
+	function add_item($item=NULL,$href=NULL,$active=FALSE,$divider=FALSE){
+		if ($item==NULL) {
+			$this->item['name'][] = 'item';
+		}else{
+			$this->item['name'][] = $item;
+		}
+
+		if ($href==NULL) {
+			$this->item['href'][] = '#';
+		}else{
+			$this->item['href'][] = $href;
+		}
+		if ($active==FALSE) {
+			$this->item['active'][] = 'dropdown-item';
+		}else{
+			$this->item['active'][] = 'dropdown-item is-active';
+		}
+		if ($divider==FALSE) {
+			$this->item['divider'][] = '';
+		}else{
+			$this->item['divider'][] = '<hr class="dropdown-divider">';
+		}
+	}
+
+	function render(){
+		if ($this->item==NULL) {
+			$this->dropdown.='
+			<a href="#" class="dropdown-item">
+				No items added yet
+			</a>
+';
+		}else{
+			$i=0;
+			while ($i<count($this->item['name'])) {
+				$this->dropdown.='			'.$this->item['divider'][$i].'
+			<a href="'.$this->item['href'][$i].'" class="'.$this->item['active'][$i].'">
+				'.$this->item['name'][$i].'
+			</a>';
+				$i++;
+			}
+		}
+		$this->dropdown.='
+		</div>
+	</div>
+</div>';
+		$this->dropdown.="
+<script>
+	var dropdown = document.querySelector('.dropdown');
+	dropdown.addEventListener('click', function(event) {
+		event.stopPropagation();
+		dropdown.classList.toggle('is-active');
+	});
+</script>";
+		return $this->dropdown;
 	}
 }

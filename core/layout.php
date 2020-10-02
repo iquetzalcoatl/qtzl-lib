@@ -32,11 +32,11 @@ class container{
 
 	private $end = '';
 
-	private $isRender = FALSE;
+// private $isRender = FALSE;
 
 	/**
 	 * qtzl-lib class container
-	 * @param $class stringto select the type of container
+	 * @param $class string to select the type of container
 	 * <li><b>fluid</b></li>
 	 * <li><b>widescreen</b></li>
 	 * <li><b>fullhd</b></li>
@@ -75,21 +75,20 @@ class container{
 	 */
 	function addItem($item = NULL){
 
-		if($this->isRender==FALSE){
+// if($this->isRender==FALSE){
+		if($item!=NULL){
+			if(!is_array($item)){
 
-			if($item!=NULL){
-				if(!is_array($item)){
+				$item = array($item);
+			}
 
-					$item = array($item);
-				}
+			for($i = 0;$i<count($item);$i++){
 
-				for($i = 0;$i<count($item);$i++){
-
-					$this->body .= $item[$i];
-				}
+				$this->body .= $item[$i];
 			}
 		}
 
+// }
 	}
 
 	/**
@@ -105,12 +104,12 @@ class container{
 	 */
 	function render(){
 
-		if($this->isRender==FALSE){
-			$box = $this->init.$this->body.$this->end;
-			$this->isRender = TRUE;
-			return $box;
-		}
+// if($this->isRender==FALSE){
+		$box = $this->init.$this->body.$this->end;
+// $this->isRender = TRUE;
+		return $box;
 
+// }
 	}
 
 }
@@ -125,7 +124,7 @@ class container{
  */
 class level{
 
-	// FIXME add templates to the class
+	// TODO add templates to the class
 	private $init = '';
 
 	private $body = '';
@@ -136,7 +135,7 @@ class level{
 
 	private $end = '';
 
-	private $isRender = FALSE;
+// private $isRender = FALSE;
 
 	/**
 	 * qtzl-lib class level
@@ -179,45 +178,44 @@ class level{
 	 */
 	function addItem($item = NULL,$align = NULL){
 
-		if($this->isRender==FALSE){
+// if($this->isRender==FALSE){
+		if($item!=NULL){
+			if(!is_array($item)){
 
-			if($item!=NULL){
-				if(!is_array($item)){
+				$item = array($item);
+			}
 
-					$item = array($item);
-				}
+			if($align==NULL){
+				for($i = 0;$i<count($item);$i++){
 
-				if($align==NULL){
-					for($i = 0;$i<count($item);$i++){
-
-						$this->body .= '
+					$this->body .= '
               <div class="level-item has-text-centered">
                 '.$item[$i].'
               </div>
             ';
-					}
-				}else{
-					if($align=='right'||$align=='left'){
-						$lvlAlign = '';
-						for($i = 0;$i<count($item);$i++){
+				}
+			}else{
+				if($align=='right'||$align=='left'){
+					$lvlAlign = '';
+					for($i = 0;$i<count($item);$i++){
 
-							$lvlAlign .= '
+						$lvlAlign .= '
     <div class="level-item">
         '.$item[$i].'
     </div>
 ';
-						}
+					}
 
-						if($align=='right'){
-							$this->lvlRight .= $lvlAlign;
-						}elseif($align=='left'){
-							$this->lvlLeft .= $lvlAlign;
-						}
+					if($align=='right'){
+						$this->lvlRight .= $lvlAlign;
+					}elseif($align=='left'){
+						$this->lvlLeft .= $lvlAlign;
 					}
 				}
 			}
 		}
 
+// }
 	}
 
 	/**
@@ -233,32 +231,31 @@ class level{
 	 */
 	function render(){
 
-		if($this->isRender==FALSE){
-			if($this->lvlLeft!=NULL){
-				$lvlAlign = '
+// if($this->isRender==FALSE){
+		if($this->lvlLeft!=NULL){
+			$lvlAlign = '
  <div class="level-left">
 ';
-				$lvlAlign .= $this->lvlLeft;
-				$lvlAlign .= '
+			$lvlAlign .= $this->lvlLeft;
+			$lvlAlign .= '
  </div>
 ';
-				$this->lvlLeft = $lvlAlign;
-			}
-			if($this->lvlRight!=NULL){
-				$lvlAlign = '
+			$this->lvlLeft = $lvlAlign;
+		}
+		if($this->lvlRight!=NULL){
+			$lvlAlign = '
  <div class="level-right">
 ';
-				$lvlAlign .= $this->lvlRight;
-				$lvlAlign .= '
+			$lvlAlign .= $this->lvlRight;
+			$lvlAlign .= '
  </div>
 ';
-				$this->lvlRight = $lvlAlign;
-			}
-			$this->body = $this->lvlLeft.$this->body.$this->lvlRight;
-			$level = $this->init.$this->body.$this->end;
-			$this->isRender = TRUE;
-			return $level;
+			$this->lvlRight = $lvlAlign;
 		}
+		$this->body = $this->lvlLeft.$this->body.$this->lvlRight;
+		$level = $this->init.$this->body.$this->end;
+// $this->isRender = TRUE;
+		return $level;
 
 	}
 
@@ -274,7 +271,7 @@ class level{
  */
 class mediaObject{
 
-	// FIXME add templates to the class
+	// TODO add templates to the class
 	private $init = '';
 
 	private $mediaLeft = '';
@@ -285,7 +282,7 @@ class mediaObject{
 
 	private $end = '';
 
-	private $isRender = FALSE;
+// private $isRender = FALSE;
 
 	/**
 	 * qtzl-lib class mediaObject
@@ -324,37 +321,36 @@ class mediaObject{
 	 */
 	function addItem($item = NULL,$align = NULL){
 
-		if($this->isRender==FALSE){
+// if($this->isRender==FALSE){
+		if($item!=NULL){
+			if(!is_array($item)){
 
-			if($item!=NULL){
-				if(!is_array($item)){
+				$item = array($item);
+			}
 
-					$item = array($item);
+			if($align==NULL){
+				for($i = 0;$i<count($item);$i++){
+
+					$this->mediaCont .= $item[$i];
 				}
-
-				if($align==NULL){
+			}else{
+				if($align=='right'||$align=='left'){
+					$mediaAlign = '';
 					for($i = 0;$i<count($item);$i++){
 
-						$this->mediaCont .= $item[$i];
+						$mediaAlign .= $item[$i];
 					}
-				}else{
-					if($align=='right'||$align=='left'){
-						$mediaAlign = '';
-						for($i = 0;$i<count($item);$i++){
 
-							$mediaAlign .= $item[$i];
-						}
-
-						if($align=='right'){
-							$this->mediaRight .= $mediaAlign;
-						}elseif($align=='left'){
-							$this->mediaLeft .= $mediaAlign;
-						}
+					if($align=='right'){
+						$this->mediaRight .= $mediaAlign;
+					}elseif($align=='left'){
+						$this->mediaLeft .= $mediaAlign;
 					}
 				}
 			}
 		}
 
+// }
 	}
 
 	/**
@@ -402,7 +398,7 @@ class mediaObject{
 		}
 		$body = $this->mediaLeft.$this->mediaCont.$this->mediaRight;
 		$mediaObject = $this->init.$body.$this->end;
-		$this->isRender = TRUE;
+// $this->isRender = TRUE;
 		return $mediaObject;
 
 	}
@@ -419,7 +415,78 @@ class mediaObject{
  */
 class hero{
 
-	// FIXME finish this class
+	// TODO add navbar features
+	private $init = '';
+
+	private $body = '';
+
+	private $end = '';
+
+	/**
+	 * qtzl-lib class hero
+	 * @param $class string to set the hero color
+	 * @param $size string to set the hero size
+	 * <li><b>medium</b></li>
+	 * <li><b>large</b></li>
+	 * <li><b>fullheight</b></li>
+	 * @param $gradient string to generate a subtle gradient.
+	 * <li><b>bold</b></li>
+	 * @example $hero = new hero();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function __construct($color = NULL,$size = NULL,$gradient = NULL){
+
+		if($color==NULL){
+			$color = ' is-primary';
+		}else{
+			$color = ' is-'.$color;
+		}
+
+		if($size!=NULL){
+			$size = ' is-'.$size;
+		}
+
+		if($gradient!=NULL){
+			$gradient = ' is-'.$gradient;
+		}
+
+		$this->init = '
+<section class="hero'.$color.$size.$gradient.'">
+';
+		$this->end = '
+</section>
+';
+
+	}
+
+	function addItem($title,$subtitle){
+
+		$this->body = '
+<div class="hero-body">
+	<div class="container">
+		<h1 class="title">
+			'.$title.'
+		</h1>
+		<h2 class="subtitle">
+			'.$subtitle.'
+		</h2>
+	</div>
+</div>
+';
+
+	}
+
+	function render(){
+
+		$hero = $this->init.$this->body.$this->end;
+		return $hero;
+
+	}
+
 }
 
 /**
@@ -438,7 +505,7 @@ class section{
 
 	private $end = '';
 
-	private $isRender = FALSE;
+// private $isRender = FALSE;
 
 	/**
 	 * qtzl-lib class section
@@ -480,19 +547,18 @@ class section{
 	 */
 	function addItem($item = NULL){
 
-		if($this->isRender==FALSE){
+// if($this->isRender==FALSE){
+		if($item!=NULL){
+			if(!is_array($item)){
+				$item = array($item);
+			}
 
-			if($item!=NULL){
-				if(!is_array($item)){
-					$item = array($item);
-				}
-
-				for($i = 0;$i<count($item);$i++){
-					$this->body .= $item[$i];
-				}
+			for($i = 0;$i<count($item);$i++){
+				$this->body .= $item[$i];
 			}
 		}
 
+// }
 	}
 
 	/**
@@ -508,12 +574,12 @@ class section{
 	 */
 	function render(){
 
-		if($this->isRender==FALSE){
-			$section = $this->init.$this->body.$this->end;
-			$this->isRender = TRUE;
-			return $section;
-		}
+// if($this->isRender==FALSE){
+		$section = $this->init.$this->body.$this->end;
+// $this->isRender = TRUE;
+		return $section;
 
+// }
 	}
 
 }
@@ -534,7 +600,7 @@ class footer{
 
 	private $end = '';
 
-	private $isRender = FALSE;
+// private $isRender = FALSE;
 
 	/**
 	 * qtzl-lib footer section
@@ -569,19 +635,18 @@ class footer{
 	 */
 	function addItem($item = NULL){
 
-		if($this->isRender==FALSE){
+// if($this->isRender==FALSE){
+		if($item!=NULL){
+			if(!is_array($item)){
+				$item = array($item);
+			}
 
-			if($item!=NULL){
-				if(!is_array($item)){
-					$item = array($item);
-				}
-
-				for($i = 0;$i<count($item);$i++){
-					$this->body .= $item[$i];
-				}
+			for($i = 0;$i<count($item);$i++){
+				$this->body .= $item[$i];
 			}
 		}
 
+// }
 	}
 
 	/**
@@ -597,12 +662,12 @@ class footer{
 	 */
 	function render(){
 
-		if($this->isRender==FALSE){
-			$section = $this->init.$this->body.$this->end;
-			$this->isRender = TRUE;
-			return $section;
-		}
+// if($this->isRender==FALSE){
+		$section = $this->init.$this->body.$this->end;
+// $this->isRender = TRUE;
+		return $section;
 
+// }
 	}
 
 }
@@ -617,6 +682,6 @@ class footer{
  */
 class tile{
 
-	// FIXME finish this class
+	// TODO finish this class
 }
 ?>

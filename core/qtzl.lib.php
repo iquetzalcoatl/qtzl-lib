@@ -454,35 +454,6 @@ class button{
 }
 
 /**
- * qtzl-lib class form
- * @version Bekermeye (1.2007)
- * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
- * @author Javier Garrido <javier-garrido@live.com>
- * @author Enrique Canto <eacm97@hotmail.com>
- * @license GNU General Public License Version 3
- */
-class form{
-
-	function __construct(){
-
-
-	}
-
-}
-
-/**
- * qtzl-lib class columns
- * @version Bekermeye (1.2007)
- * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
- * @author Javier Garrido <javier-garrido@live.com>
- * @author Enrique Canto <eacm97@hotmail.com>
- * @license GNU General Public License Version 3
- */
-class columns{
-
-}
-
-/**
  * qtzl-lib class box is simply a container with a shadow,
  * a border,a radius, and some padding.
  * @version Bekermeye (1.2007)
@@ -778,11 +749,11 @@ class dropdown{
 
 }
 
-class breadcumb{
+class breadcrumb{
 
 	function __construct(){
 
-		$this->breadcumb = '
+		$this->breadcrumb = '
 <nav class="breadcrumb" aria-label="breadcrumbs">
 	<ul>';
 
@@ -808,30 +779,275 @@ class breadcumb{
 		if($current==FALSE){
 			$this->item['current'][] = '';
 		}else{
-			$this->item['active'][] = ' aria-current="page"';
+			$this->item['current'][] = ' aria-current="page"';
 		}
 
 	}
 
-	function render(){
+	function render($output = TRUE){
 
-		if($this->item==NULL){
-			$this->breadcumb .= '
-		<li><a href="#">Breadcumb items not added yet</a></li>';
+		if(!isset($this->item)){
+			$this->breadcrumb .= '
+		<li><a href="#">Breadcrumb items not added yet</a></li>';
 		}else{
 			$i = 0;
 			while($i<count($this->item['name'])){
-				$this->breadcumb .= '
+				$this->breadcrumb .= '
 		<li'.$this->item['active'][$i].'>
 			<a href=""'.$this->item['current'][$i].'>
-				'.$this->item['name'].'
+				'.$this->item['name'][$i].'
 			</a>
 		</li>';
 				$i++;
 			}
-			$this->breadcumb .= '
+			$this->breadcrumb .= '
 	</ul>
 </nav>';
+		}
+		if($output==FALSE){
+			return $this->breadcrumb;
+		}else{
+			echo $this->breadcrumb;
+		}
+
+	}
+
+}
+
+class card{
+
+	protected $card = NULL;
+
+	protected $card_img = NULL;
+
+	protected $card_header = NULL;
+
+	protected $card_content = NULL;
+
+	protected $card_footer = NULL;
+
+	function __construct(){
+
+		$this->card = '
+<div class="card">';
+
+	}
+
+	function cardImage($size = NULL,$src = NULL,$round = NULL){
+
+		$this->card_img = '
+	<div class="card-image">';
+		$this->image = new image($size);
+		$this->image->addImg($src,$round);
+		$this->card_img .= $this->image->render(FALSE).'
+	</div>';
+
+	}
+
+	function cardHeader($title = NULL,$icon = NULL,$href = NULL){
+
+		if($title==NULL){
+			$this->title = 'Card Title';
+		}else{
+			$this->title = $title;
+		}
+		$this->card_header = '
+	<header class="card-header">
+		<p class="card-header-title">
+			'.$this->title.'
+		</p>';
+		if($icon!=NULL){
+			$this->icon = $icon;
+			if($href!=NULL){
+				$this->href = $href;
+			}else{
+				$this->href = '#';
+			}
+			$this->card_header .= '
+		<a href="'.$this->href.
+				'" class="card-header-icon">
+			<span class="icon">
+				<i class="'.$this->icon.'"></i>
+			</span>
+		</a>';
+		}
+		$this->card_header .= '
+	</header>';
+
+	}
+
+	function cardContent($content = NULL){
+
+		$this->card_content = '
+	<div class="card-content">
+		<div class="content">
+';
+		if($content==NULL){
+			$content = array(
+					'Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+					Phasellus nec iaculis mauris.');
+		}else{
+			if(is_array($content)){
+				$content = $content;
+			}else{
+				$content = array($content);
+			}
+		}
+		$i = 0;
+		while($i<count($this->card_content)){
+			$this->card_content .= $content[$i];
+			$i++;
+		}
+		$this->card_content .= '
+		</div>
+	</div>';
+
+	}
+
+	function cardFooter($data = NULL,$href = NULL){
+
+		$this->card_footer = '
+	<footer class="card-footer">';
+		if($data==NULL){
+			$data = array('Card','Footer');
+		}
+		if($href==NULL){
+			$href = array('#','#');
+		}
+		if(!is_array($data)){
+			$data = array($data);
+		}
+		if(!is_array($href)){
+			$data = array($href);
+		}
+		if(count($data)!=count($href)){
+			echo "You must set same qty of titles and href's for proceed";
+			die();
+		}
+		$i = 0;
+		while($i<count($data)){
+			$this->card_footer .= '
+		<a href="'.$href[$i].'" class="card-footer-item">'.$data[$i].'</a>';
+			$i++;
+		}
+		$this->card_footer .= '
+	</footer>';
+
+	}
+
+	function render($output = TRUE,$header = FALSE,$img = FALSE,
+		$content = FALSE,$footer = FALSE){
+
+		if(isset($this->card_header)){
+			$this->card .= $this->card_header;
+		}else{
+			if($header==TRUE){
+				$this->cardFooter();
+			}
+		}
+		if(isset($this->card_img)){
+			$this->card .= $this->card_img;
+		}else{
+			if($header==TRUE){
+				$this->cardImage();
+			}
+		}
+		if(isset($this->card_content)){
+			$this->card .= $this->card_content;
+		}else{
+			if($content==TRUE){
+				$this->cardContent();
+			}
+		}
+		if(isset($this->card_footer)){
+			$this->card .= $this->card_footer;
+		}else{
+			if($footer==TRUE){
+				$this->cardFooter();
+			}else{
+				$this->cardFooter('','');
+			}
+		}
+
+		$this->card .= '
+</div>';
+		if($output==FALSE){
+			return $this->card;
+		}else{
+			echo $this->card;
+		}
+
+	}
+
+}
+
+class image{
+
+	function __construct($size = NULL){
+
+		$this->sizes = array('16x16'=>'16x16','24x24'=>'24x24','32x32'=>'32x32',
+				'48x48'=>'48x48','64x64'=>'64x64','96x96'=>'96x96',
+				'128x128'=>'128x128','480x480'=>'square','480x480'=>'1by1',
+				'600x480'=>'5by4','640x480'=>'4by3','480x320'=>'3by2',
+				'800x480'=>'5by3','640x360'=>'16by9','640x320'=>'2by1',
+				'720x240'=>'is-3by1','480x600'=>'4by5','480x640'=>'3by4',
+				'320x480'=>'2by3','480x800'=>'3by5','360x460'=>'9by16',
+				'320x640'=>'1by2','240x720'=>'1by3',);
+
+		$this->placeholder = array_flip($this->sizes);
+		if($size==NULL){
+			$this->size = 'image is-128x128';
+			$this->set = '128x128';
+		}else{
+			if(in_array($size,$this->sizes)){
+				echo "true";
+				$this->size = 'image is-'.$size;
+				$this->set = $this->placeholder[$size];
+			}else{
+				echo "false";
+				$this->size = 'image is-128x128';
+				$this->set = '128x128';
+			}
+		}
+		$this->figure = '<figure class="'.$this->size.'">';
+
+	}
+
+	function addImg($src = NULL,$round = FALSE){
+
+		if($round!=FALSE){
+			$this->round = ' class="is-rounded" ';
+		}else{
+			$this->round = '';
+		}
+		if($src==NULL){
+			$this->src = 'https: // bulma.io/images/placeholders/'.$this->set.
+				'.png';
+		}else{
+			$this->src = $src;
+		}
+		$this->image = '<img '.$this->round.'src="'.$this->src.'">';
+		return $this->image;
+
+	}
+
+	function render($output = TRUE){
+
+		if(!isset($this->image)){
+			$this->addImg();
+		}
+		$this->img_array[] = $this->figure;
+		$this->img_array[] = $this->image;
+		$this->img_array[] = '</figure>';
+		$this->img = '
+'.$this->figure.'	
+	'.$this->image;
+		$this->img .= '
+</figure>';
+		if($output==TRUE){
+			echo ($this->img);
+		}else{
+			return $this->img;
 		}
 
 	}

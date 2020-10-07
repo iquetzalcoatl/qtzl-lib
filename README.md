@@ -10,7 +10,7 @@
 
 <img src="https://raw.githubusercontent.com/iquetzalcoatl/qtzl-lib/bekermeye/core/img/logo.png" alt="Bulma: a Flexbox CSS framework" style="max-width:100%;" width="600">
 
-##What is qtzl-lib?
+### What is qtzl-lib?
 
 We know, in this times we really want to be fullstack developers, but sometimes we need deploy an web application in php and... oh no we need a frontend for show a quickly code. so you start to learn some CSS framework and oh no, we need to learn patterns of design and a lot of things.
 
@@ -19,7 +19,7 @@ Yeah, We know it's diffcult to get exactly correctly desing for our application.
 Qtzl-lib was developed to get an easy frontend and wich its better in oriented object programming.
 Let's save time to desing and keep coding.👨‍💻
 
-##Quick install
+### Quick install
 <ol>
 <li> Download the current files from github by cloning.</li>
 
@@ -36,15 +36,15 @@ include_once QTZL_ENGINE;
 ```
 > And yes, That's all
 
-##OS Compatibily
+### OS Compatibily
 
 Qtlz-lib was desinged to be compatible with all host operating systems
 
-##PHP Version
+### PHP Version
 
 Qtlz-lib was coded to be compatible from php version 5.6 to 7.4
 
-##Usage
+### Usage
 
 To start any qtzl-lib usage we need start the engine.
 
@@ -66,7 +66,7 @@ $navbar->render();
 ?>
 ```
 
-##About us
+### About us
 
 the logo is supposed to be quetzalcoatl head but need some time to finish this.
 Javier alias javee

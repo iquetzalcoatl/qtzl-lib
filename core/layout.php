@@ -463,6 +463,17 @@ class hero{
 
 	}
 
+	/**
+	 * qtzl-lib hero addItem function
+	 * @param $title string to add a new element to the hero
+	 * @param $subtitle string to add an element below the title
+	 * @example $hero = new hero(); $hero->addItem($title,$subtitle);
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
 	function addItem($title,$subtitle){
 
 		$this->body = '
@@ -480,6 +491,17 @@ class hero{
 
 	}
 
+	/**
+	 * qtzl-lib hero render function
+	 * assembles all parts of the hero and returns all the html code
+	 * @return string
+	 * @example $hero = new hero(); $hero->render();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
 	function render(){
 
 		$hero = $this->init.$this->body.$this->end;
@@ -603,7 +625,7 @@ class footer{
 // private $isRender = FALSE;
 
 	/**
-	 * qtzl-lib footer section
+	 * qtzl-lib class footer
 	 * @example $footer = new footer();
 	 * @version Bekermeye (1.2007)
 	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
@@ -626,7 +648,7 @@ class footer{
 	 * qtzl-lib footer addItem function
 	 * adds a single or an array of items into the footer
 	 * @param $item string to add a new element to the footer
-	 * @example $section = new footer(); $footer->addItem($item);
+	 * @example $footer = new footer(); $footer->addItem($item);
 	 * @version Bekermeye (1.2007)
 	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
 	 * @author Javier Garrido <javier-garrido@live.com>
@@ -683,5 +705,106 @@ class footer{
 class tile{
 
 	// TODO finish this class
+	private $init = '';
+
+	private $body = '';
+
+	private $end = '';
+
+	/**
+	 * qtzl-lib class tile
+	 * @param $contextual string to add a hierarchy to the tile
+	 * <li><b>ancestor</b></li>
+	 * <li><b>parent</b></li>
+	 * <li><b>child</b></li>
+	 * @param $class string to set a class for the tile
+	 * @param $directional string to set the orientation of the tile
+	 * <li><b>vertical</b></li>
+	 * @param $horizontal string to set the size
+	 * <li><b>Any number between 1 and 12</b></li>
+	 * @param $color string to set a color for the tile
+	 * @example $tile = new tile();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function __construct($contextual = NULL,$class = NULL,$directional = NULL,
+		$horizontal = NULL,$color = NULL){
+
+		if($contextual!=NULL){
+			$contextual = ' is-'.$contextual;
+		}
+
+		if($class!=NULL){
+			$class = ' '.$class;
+		}
+
+		if($directional!=NULL){
+			$directional = ' is-'.$directional;
+		}
+
+		if($horizontal!=NULL){
+			$horizontal = ' is-'.$horizontal;
+		}
+
+		if($color!=NULL){
+			$color = ' is-'.$color;
+		}
+
+		$mods = $contextual.$class.$directional.$horizontal.$color;
+		$this->init = '
+<div class="tile'.$mods.'">
+';
+		$this->end = '
+</div>
+';
+
+	}
+
+	/**
+	 * qtzl-lib tile addItem function
+	 * adds a single or an array of items into the tile
+	 * @param $item string to add a new element to the tile
+	 * @example $tile = new tile(); $tile->addItem($item);
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function addItem($item = NULL){
+
+		if($item!=NULL){
+			if(!is_array($item)){
+				$item = array($item);
+			}
+
+			for($i = 0;$i<count($item);$i++){
+				$this->body .= $item[$i];
+			}
+		}
+
+	}
+
+	/**
+	 * qtzl-lib tile render function
+	 * assembles all parts of the tile and returns all the html code
+	 * @return string
+	 * @example $tile = new tile(); $tile->render();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function render(){
+
+		$tile = $this->init.$this->body.$this->end;
+		return $tile;
+
+	}
+
 }
 ?>

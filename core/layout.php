@@ -32,8 +32,6 @@ class container{
 
 	private $end = '';
 
-// private $isRender = FALSE;
-
 	/**
 	 * qtzl-lib class container
 	 * @param $class string to select the type of container
@@ -75,7 +73,6 @@ class container{
 	 */
 	function addItem($item = NULL){
 
-// if($this->isRender==FALSE){
 		if($item!=NULL){
 			if(!is_array($item)){
 
@@ -88,7 +85,6 @@ class container{
 			}
 		}
 
-// }
 	}
 
 	/**
@@ -104,12 +100,9 @@ class container{
 	 */
 	function render(){
 
-// if($this->isRender==FALSE){
 		$box = $this->init.$this->body.$this->end;
-// $this->isRender = TRUE;
 		return $box;
 
-// }
 	}
 
 }
@@ -134,8 +127,6 @@ class level{
 	private $lvlRight = '';
 
 	private $end = '';
-
-// private $isRender = FALSE;
 
 	/**
 	 * qtzl-lib class level
@@ -178,7 +169,6 @@ class level{
 	 */
 	function addItem($item = NULL,$align = NULL){
 
-// if($this->isRender==FALSE){
 		if($item!=NULL){
 			if(!is_array($item)){
 
@@ -215,7 +205,6 @@ class level{
 			}
 		}
 
-// }
 	}
 
 	/**
@@ -231,7 +220,6 @@ class level{
 	 */
 	function render(){
 
-// if($this->isRender==FALSE){
 		if($this->lvlLeft!=NULL){
 			$lvlAlign = '
  <div class="level-left">
@@ -254,7 +242,6 @@ class level{
 		}
 		$this->body = $this->lvlLeft.$this->body.$this->lvlRight;
 		$level = $this->init.$this->body.$this->end;
-// $this->isRender = TRUE;
 		return $level;
 
 	}
@@ -281,8 +268,6 @@ class mediaObject{
 	private $mediaRight = '';
 
 	private $end = '';
-
-// private $isRender = FALSE;
 
 	/**
 	 * qtzl-lib class mediaObject
@@ -321,7 +306,6 @@ class mediaObject{
 	 */
 	function addItem($item = NULL,$align = NULL){
 
-// if($this->isRender==FALSE){
 		if($item!=NULL){
 			if(!is_array($item)){
 
@@ -350,7 +334,6 @@ class mediaObject{
 			}
 		}
 
-// }
 	}
 
 	/**
@@ -398,7 +381,6 @@ class mediaObject{
 		}
 		$body = $this->mediaLeft.$this->mediaCont.$this->mediaRight;
 		$mediaObject = $this->init.$body.$this->end;
-// $this->isRender = TRUE;
 		return $mediaObject;
 
 	}
@@ -527,8 +509,6 @@ class section{
 
 	private $end = '';
 
-// private $isRender = FALSE;
-
 	/**
 	 * qtzl-lib class section
 	 * @param $class string to select the type of modifier of the section
@@ -569,7 +549,6 @@ class section{
 	 */
 	function addItem($item = NULL){
 
-// if($this->isRender==FALSE){
 		if($item!=NULL){
 			if(!is_array($item)){
 				$item = array($item);
@@ -580,7 +559,6 @@ class section{
 			}
 		}
 
-// }
 	}
 
 	/**
@@ -596,12 +574,9 @@ class section{
 	 */
 	function render(){
 
-// if($this->isRender==FALSE){
 		$section = $this->init.$this->body.$this->end;
-// $this->isRender = TRUE;
 		return $section;
 
-// }
 	}
 
 }
@@ -621,8 +596,6 @@ class footer{
 	private $body = '';
 
 	private $end = '';
-
-// private $isRender = FALSE;
 
 	/**
 	 * qtzl-lib class footer
@@ -657,7 +630,6 @@ class footer{
 	 */
 	function addItem($item = NULL){
 
-// if($this->isRender==FALSE){
 		if($item!=NULL){
 			if(!is_array($item)){
 				$item = array($item);
@@ -668,7 +640,6 @@ class footer{
 			}
 		}
 
-// }
 	}
 
 	/**
@@ -684,12 +655,9 @@ class footer{
 	 */
 	function render(){
 
-// if($this->isRender==FALSE){
 		$section = $this->init.$this->body.$this->end;
-// $this->isRender = TRUE;
 		return $section;
 
-// }
 	}
 
 }
@@ -704,7 +672,7 @@ class footer{
  */
 class tile{
 
-	// TODO finish this class
+	// TODO Improve it
 	private $init = '';
 
 	private $body = '';

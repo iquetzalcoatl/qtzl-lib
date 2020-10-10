@@ -17,6 +17,105 @@
  */
 
 /**
+ * qtzl-lib class block
+ * is a simple spacer tool
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
+class block{
+
+	private $init = '';
+
+	private $body = '';
+
+	private $end = '';
+
+	/**
+	 * qtzl-lib class block
+	 * creates a block and initializes the html code
+	 * @example $block = new block();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function __construct(){
+
+		$this->init = '
+<div class="block">';
+		$this->end = '
+</div>';
+
+	}
+
+	/**
+	 * qtzl-lib block addItem function
+	 * adds a single or an array of items into the block
+	 * @param $item string to add a new element to the block
+	 * @param $eachOne boolean to format each element given in the array
+	 * @example $block = new block(); $block->addItem($block);
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function addItem($item = NULL,$eachOne = FALSE){
+
+		if($item!=NULL){
+
+			if(!is_array($item)){
+				$item = array($item);
+			}
+
+			if($eachOne==FALSE){
+
+				for($i = 0;$i<count($item);$i++){
+
+					$this->body .= $item[$i];
+				}
+			}else{
+				$this->body = $item;
+			}
+		}
+
+	}
+
+	/**
+	 * qtzl-lib block render function
+	 * assembles all parts of the block and returns all the html code
+	 * @return string
+	 * @example $block = new block(); $block->render();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function render(){
+
+		if(is_array($this->body)){
+			$block = '';
+			for($i = 0;$i<count($this->body);$i++){
+				$block .= $this->init.$this->body[$i].$this->end;
+			}
+
+			return $block;
+		}else{
+
+			$block = $this->init.$this->body.$this->end;
+			return $block;
+		}
+
+	}
+
+}
+
+/**
  * qtzl-lib class box
  * is simply a container with a shadow, a border,
  * a radius, and some padding.
@@ -33,8 +132,6 @@ class box{
 	private $body = '';
 
 	private $end = '';
-
-	private $isRender = FALSE;
 
 	/**
 	 * qtzl-lib class box
@@ -59,6 +156,7 @@ class box{
 	 * qtzl-lib box addItem function
 	 * adds a single or an array of items into the box
 	 * @param $item string to add a new element to the box
+	 * @param $eachOne boolean to format each element given in the array
 	 * @example $box = new box(); $box->addItem($item);
 	 * @version Bekermeye (1.2007)
 	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
@@ -66,20 +164,22 @@ class box{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function addItem($item = NULL){
+	function addItem($item = NULL,$eachOne = FALSE){
 
-		if($this->isRender==FALSE){
+		if($item!=NULL){
 
-			if($item!=NULL){
-				if(!is_array($item)){
+			if(!is_array($item)){
+				$item = array($item);
+			}
 
-					$item = array($item);
-				}
+			if($eachOne==FALSE){
 
 				for($i = 0;$i<count($item);$i++){
 
 					$this->body .= $item[$i];
 				}
+			}else{
+				$this->body = $item;
 			}
 		}
 
@@ -98,9 +198,16 @@ class box{
 	 */
 	function render(){
 
-		if($this->isRender==FALSE){
+		if(is_array($this->body)){
+			$box = '';
+			for($i = 0;$i<count($this->body);$i++){
+				$box .= $this->init.$this->body[$i].$this->end;
+			}
+
+			return $box;
+		}else{
+
 			$box = $this->init.$this->body.$this->end;
-			$this->isRender = TRUE;
 			return $box;
 		}
 
@@ -192,51 +299,161 @@ class box{
  */
 class button{
 
-	// FIXME add documentation and finish the class
-	private $text = '';
+	// TODO finish this class
+	private $init = '';
 
-	private $class = '';
+	private $body = '';
 
-	private $html = '';
+	private $end = '';
 
-	function __construct($text = NULL,$mods = NULL){
+	/**
+	 * qtzl-lib class button
+	 * creates a button and initializes the html code
+	 * @param $text string to set the text shown in the button
+	 * @param $mods string to set all the modifiers of the button
+	 * @param $tag string to set the type of html tag for the button
+	 * <li>a</li>
+	 * <li>button</li>
+	 * <li>input</li>
+	 * @param $type string to set the type of html button
+	 * <li>button</li>
+	 * <li>submit</li>
+	 * <li>reset</li>
+	 * @param $value string to set the value and name of the button
+	 * @param $disabled boolean to set whether the button is disabled or not
+	 * @example $button = new button();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function __construct($text = NULL,$mods = NULL,$tag = NULL,$type = NULL,
+		$value = NULL,$disabled = FALSE){
 
-		// FIXME add disabled property
-		$this->text = $text;
-		$this->class = $mods;
-		$this->html = '<button class="button';
-
-		if($this->class!=NULL){
-			if(!is_array($this->class)){
-				$this->class = array($this->class);
-			}
-
-			for($i = 0;$i<count($this->class);$i++){
-				$concat = ' is-'.$this->class[$i];
-				$this->html .= $concat;
-			}
+		// Checks if tag, value and type are nulls to set the defaults
+		if($tag==NULL){
+			$tag = 'button';
 		}
 
-		$this->html .= '">';
+		if($type==NULL){
+			$type = 'button';
+		}
+
+		if($value==NULL){
+			$value = $text;
+		}
+
+		// Creates the parts of the init
+		$initClass = ' class="button';
+		$initType = ' type="'.$type.'"';
+		$initValue = ' value="'.$value.'"';
+		$initName = ' name="'.$value.'"';
+		$initDisabled = '';
+		if($disabled==TRUE){
+			$initDisabled = ' disabled';
+		}
+
+		// Concatenates all the modifiers given
+		if($mods!=NULL){
+			if(!is_array($mods)){
+				$mods = array($mods);
+			}
+			for($i = 0;$i<count($mods);$i++){
+				$initClass .= ' is-'.$mods[$i];
+			}
+		}
+		$initClass .= '"';
+
+		// Builds the init based on the given tag
+		$initAttr = $initType.$initName.$initValue.$initClass.$initDisabled;
+		$this->init = '<'.$tag.$initAttr.'>';
+
+		// Builds the body if the current tag is not input
+		if($tag!='input'){
+			$this->body = $text;
+		}
+
+		// Builds the end tag if the given one is not input
+		if($tag!='input'){
+			$this->end = '</'.$tag.'>';
+		}
 
 	}
 
-	function addIcon($icon,$size = NULL){
+	/**
+	 * qtzl-lib button addIcon function
+	 * adds a single or an array of icons from Font Awesome 5 Library
+	 * (this function is only valid for the "button" and "a" html tags)
+	 * @param $icon string to add a new icon to the button
+	 * @param $type string to the type of icon (Font Awesome 5 Library free
+	 * types)
+	 * <li>fas -> for common icons</li>
+	 * <li>fab -> for brand icons</li>
+	 * @param $size string to set a size for the icon in the button
+	 * <li>small</li>
+	 * <li>medium</li>
+	 * @param $align string to set an alignment for the icon in the button
+	 * <li>left</li>
+	 * <li>right</li>
+	 * @example $button = new button(); $box->addIcon($icon);
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function addIcon($icon = NULL,$type = NULL,$size = NULL,$align = NULL){
 
-		// FIXME add feature to add icons to the right of the text
-		$this->html .= '
-		<span class="icon '.$size.'">
-		<i class="fas fa-'.$icon.'"></i>
-		</span>
-		';
+		// Sets the default alignment and type
+		if($align==NULL){
+			$align = 'left';
+		}
+
+		if($type==NULL){
+			$type = 'fas';
+		}
+
+		// Creates the size class if it's given
+		if($size!=NULL){
+			$size = ' is-'.$size;
+		}
+
+		// Builds the html code for each part
+		$htmlIcon = '
+           <span class="icon'.$size.'">
+           <i class="'.$type.' fa-'.$icon.'"></i>
+           </span>
+           ';
+
+		$htmlText = '<span>'.$this->body.'</span>';
+
+		// Assembles both parts depending of the alignment of the icon given
+		if($align=='left'){
+			$this->body = $htmlIcon.$htmlText;
+		}elseif($align=='right'){
+			$this->body = $htmlText.$htmlIcon;
+		}else{
+			echo 'Try a valid alignment for the icon (left or rigth)';
+		}
 
 	}
 
+	/**
+	 * qtzl-lib button render function
+	 * assembles all parts of the button and returns all the html code
+	 * @return string
+	 * @example $button = new button(); $box->button();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
 	function render(){
 
-		$concat = '<span>'.$this->text.'</span>';
-		$this->html .= $concat.'</button>';
-		return $this->html;
+		$button = $this->init.$this->body.$this->end;
+		return $button;
 
 	}
 

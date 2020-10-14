@@ -113,11 +113,13 @@ class engine{
 		if($this->connection=='online'){
 			$this->css = 'https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css';
 			$this->map = 'https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.css.map';
-			$this->js = 'https://kit.fontawesome.com/df83b7e0ad.js" crossorigin="anonymous';
+			$this->icons = 'https://kit.fontawesome.com/df83b7e0ad.js" crossorigin="anonymous';
+			$this->js = 'https://cdn.jsdelivr.net/npm/@vizuaalog/bulmajs@0.11.0/dist/bulma.js';
 		}else{
 			$this->css = qtzl_location().'core/css/bulma.css';
 			$this->map = qtzl_location().'core/css/bulma.css.map';
-			$this->js = qtzl_location().'core/js/fontsawesome.js';
+			$this->icons = qtzl_location().'core/js/fontsawesome.js';
+			$this->js = qtzl_location().'core/js/bulma.js';
 		}
 		if(in_array('main.inc.php',scandir(getcwd()))){
 			$this->path = '';
@@ -151,6 +153,7 @@ class engine{
 
 </head>
 <body>
+<script src="'.$this->icons.'"></script>
 <script src="'.$this->js.'"></script>
 ';
 
@@ -341,27 +344,6 @@ class navbar{
         </div>
     </div>
 </nav>
-<script>
-document.addEventListener(\'DOMContentLoaded\', () => {
-
-	// Get all "navbar-burger" elements
-	const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll(\'.navbar-burger\'), 0);
-
-	// Check if there are any navbar burgers
-	if ($navbarBurgers.length > 0) {
-		// Add a click event on each of them
-		$navbarBurgers.forEach( el => {
-			el.addEventListener(\'click\', () => {
-				// Get the target from the "data-target" attribute
-				const target = el.dataset.target;
-				const $target = document.getElementById(target);
-				// Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-				el.classList.toggle(\'is-active\');
-				$target.classList.toggle(\'is-active\');
-			});
-		});
-	}
-});
 </script>';
 
 		return $this->navbar;
@@ -390,6 +372,26 @@ document.addEventListener(\'DOMContentLoaded\', () => {
 			$this->href[$menu][] = $href;
 		}
 		$this->menu = array_keys($this->submenus);
+
+	}
+
+	function render($output = TRUE){
+
+		if(isset($this->navbar)){
+			if($output!=TRUE){
+				return $this->navbar;
+			}else{
+				echo ($this->navbar);
+			}
+		}else{
+			$this->manualnavbar();
+			$this->addmenu('menu','submenu','#');
+			if($output!=TRUE){
+				return $this->navbar;
+			}else{
+				echo $this->navbar;
+			}
+		}
 
 	}
 
@@ -625,6 +627,14 @@ class box{
 
 }
 
+/**
+ * qtzl-lib class dropdown
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
 class dropdown{
 
 	protected $is;
@@ -712,7 +722,7 @@ class dropdown{
 
 	}
 
-	function render(){
+	function render($output = TRUE){
 
 		if($this->item==NULL){
 			$this->dropdown .= '
@@ -735,20 +745,24 @@ class dropdown{
 		</div>
 	</div>
 </div>';
-		$this->dropdown .= "
-<script>
-	var dropdown = document.querySelector('.dropdown');
-	dropdown.addEventListener('click', function(event) {
-		event.stopPropagation();
-		dropdown.classList.toggle('is-active');
-	});
-</script>";
-		return $this->dropdown;
+		if($output==TRUE){
+			echo $this->dropdown;
+		}else{
+			return $this->dropdown;
+		}
 
 	}
 
 }
 
+/**
+ * qtzl-lib class breadcrumb
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
 class breadcrumb{
 
 	function __construct(){
@@ -814,6 +828,14 @@ class breadcrumb{
 
 }
 
+/**
+ * qtzl-lib class card
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
 class card{
 
 	protected $card = NULL;
@@ -826,6 +848,14 @@ class card{
 
 	protected $card_footer = NULL;
 
+	/**
+	 * qtzl-lib class card
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
 	function __construct(){
 
 		$this->card = '
@@ -981,8 +1011,167 @@ class card{
 
 }
 
+/**
+ * qtzl-lib class message
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
+class message{
+
+	/**
+	 * qtzl-lib class message
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function __construct($color = NULL,$size = NULL){
+
+		switch($color){
+			case 'primary':
+				$this->mode = ' is-primary';
+				break;
+			case 'link':
+				$this->mode = ' is-link';
+				break;
+			case 'info':
+				$this->mode = ' is-info';
+				break;
+			case 'success':
+				$this->mode = ' is-success';
+				break;
+			case 'warning':
+				$this->mode = ' is-warning';
+				break;
+			case 'danger':
+				$this->mode = ' is-danger';
+				break;
+			case 'black':
+				$this->mode = ' is-black';
+				break;
+			case 'dark':
+				$this->mode = ' is-dark';
+				break;
+			case 'light':
+				$this->mode = ' is-light';
+				break;
+			default:
+				$this->mode = '';
+				break;
+		}
+
+		switch($size){
+			case 'small':
+				$this->size = $this->mode.' is-small';
+				break;
+			case 'medium':
+				$this->size = $this->mode.' is-medium';
+				break;
+			case 'large':
+				$this->size = $this->mode.' is-large';
+				break;
+			default:
+				$this->size = NULL;
+				break;
+		}
+		$this->message = '
+<article class="message'.$this->mode.''.$this->size.'">';
+
+	}
+
+	function messageHeader($title = NULL,$button = TRUE){
+
+		if($title==NULL){
+			$this->title = 'Message Header';
+		}else{
+			$this->title = $title;
+		}
+		if($button==FALSE){
+			$this->button = NULL;
+		}else{
+			$this->button = '<button class="delete'.$this->size.
+				'" aria-label="delete"></button>';
+		}
+		$this->header = '
+	<div class="message-header">
+		<p>'.$this->title.'</p>
+		'.$this->button.'
+	</div>';
+
+	}
+
+	function messageBody($content = NULL){
+
+		if($content==NULL){
+			$this->content = '<strong>Message body</strong> Lorem ipsum dolor';
+			;
+		}else{
+			if(!is_array($content)){
+				$this->content = array($content);
+			}
+		}
+		$this->body = '
+	<div class="Message-body">';
+		$i = 0;
+		while($i<count($this->content)){
+			$this->body .= $this->content[$i];
+			$i++;
+		}
+		$this->body .= '
+	</div>';
+
+	}
+
+	function render($header = FALSE,$content = FALSE,$output = TRUE){
+
+		if(!isset($this->header)){
+			if($header==FALSE){
+				$this->header = NULL;
+			}else{
+				$this->messageHeader();
+			}
+		}
+		if(!isset($this->content)){
+			$this->messageBody();
+		}
+
+		$this->message .= $this->header;
+		$this->message .= $this->content;
+		$this->message .= '
+</article>';
+
+		if($output==TRUE){
+			echo $this->message;
+		}else{
+			return $this->message;
+		}
+
+	}
+
+}
+
+/**
+ * qtzl-lib class image
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
 class image{
 
+	/**
+	 * qtzl-lib class engine
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
 	function __construct($size = NULL){
 
 		$this->sizes = array('16x16'=>'16x16','24x24'=>'24x24','32x32'=>'32x32',
@@ -1000,11 +1189,9 @@ class image{
 			$this->set = '128x128';
 		}else{
 			if(in_array($size,$this->sizes)){
-				echo "true";
 				$this->size = 'image is-'.$size;
 				$this->set = $this->placeholder[$size];
 			}else{
-				echo "false";
 				$this->size = 'image is-128x128';
 				$this->set = '128x128';
 			}
@@ -1021,7 +1208,7 @@ class image{
 			$this->round = '';
 		}
 		if($src==NULL){
-			$this->src = 'https: // bulma.io/images/placeholders/'.$this->set.
+			$this->src = 'https://bulma.io/images/placeholders/'.$this->set.
 				'.png';
 		}else{
 			$this->src = $src;
@@ -1048,6 +1235,377 @@ class image{
 			echo ($this->img);
 		}else{
 			return $this->img;
+		}
+
+	}
+
+}
+
+/**
+ * qtzl-lib class modal
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
+class modal{
+
+	var $modal = NULL;
+
+	function __construct($id = NULL){
+
+		if($id==NULL){
+			$this->id = "modal";
+		}else{
+			$this->id = $id;
+		}
+		$this->modal = '
+<div id="'.$this->id.'" class ="modal">
+	<div class="modal-background"></div>';
+
+	}
+
+	function addContent($content = NULL){
+
+		$this->modalcontent = NULL;
+
+		if($content==NULL){
+			$this->content = array(
+					'Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+<strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec 
+nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, 
+et dictum <a>felis venenatis</a> efficitur. Aenean ac <em>eleifend lacus</em>, 
+in mollis lectus. Donec sodales, arcu et sollicitudin porttitor, tortor urna 
+tempor ligula, id porttitor mi magna a neque. Donec dui urna, vehicula et sem 
+eget, facilisis sodales sem. ');
+		}else{
+			if(!is_array($content)){
+				$this->content = array($content);
+			}else{
+				$this->content = $content;
+			}
+		}
+		$this->modalcontent .= '
+	<div class="modal-content">
+		<div class="container"> 
+			<div class="column"> 
+				<div class="box"> 
+					<p>';
+		$i = 0;
+		while($i<count($this->content)){
+			$this->modalcontent .= $this->content[$i];
+			$i++;
+		}
+		$this->modalcontent .= '
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>';
+		return $this->modalcontent;
+
+	}
+
+	function addImage($imgsrc = NULL,$size = NULL){
+
+		if($imgsrc==NULL){
+			$this->img = 'https://bulma.io/images/placeholders/1280x960.png';
+		}else{
+			if(file_exists($imgsrc)){
+				$this->img = $imgsrc;
+			}else{
+				$this->img = $imgsrc;
+			}
+		}
+		$this->sizes = array('16x16'=>'16x16','24x24'=>'24x24','32x32'=>'32x32',
+				'48x48'=>'48x48','64x64'=>'64x64','96x96'=>'96x96',
+				'128x128'=>'128x128','480x480'=>'square','480x480'=>'1by1',
+				'600x480'=>'5by4','640x480'=>'4by3','480x320'=>'3by2',
+				'800x480'=>'5by3','640x360'=>'16by9','640x320'=>'2by1',
+				'720x240'=>'is-3by1','480x600'=>'4by5','480x640'=>'3by4',
+				'320x480'=>'2by3','480x800'=>'3by5','360x460'=>'9by16',
+				'320x640'=>'1by2','240x720'=>'1by3',);
+
+		$this->placeholder = array_flip($this->sizes);
+		if($size==NULL){
+			$this->size = 'image is-4by3';
+			$this->set = '4by3';
+		}else{
+			if(in_array($size,$this->sizes)){
+				echo "true";
+				$this->size = 'image is-'.$size;
+				$this->set = $this->placeholder[$size];
+			}else{
+				echo "false";
+				$this->size = 'image is-4by3';
+				$this->set = '4by3';
+			}
+		}
+
+		$this->modalimg = '
+	<div class="modal-content">
+		<p class="image '.$this->size.'">
+			<img src="'.$this->img.
+			'" alt="">
+		</p>
+	</div>
+	<button class="modal-close is-large" aria-label="close"></button>';
+		return $this->modalimg;
+
+	}
+
+	function addCard($title = NULL,$content = NULL,$button1 = NULL,
+		$button2 = NULL){
+
+		$this->modalcard = NULL;
+
+		if($title==NULL){
+			$this->title = 'Title';
+		}else{
+			$this->title = $title;
+		}
+		if($content==NULL){
+			$this->content = array(
+					'Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+<strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec
+nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam,
+et dictum <a>felis venenatis</a> efficitur. Aenean ac <em>eleifend lacus</em>,
+in mollis lectus. Donec sodales, arcu et sollicitudin porttitor, tortor urna
+tempor ligula, id porttitor mi magna a neque. Donec dui urna, vehicula et sem
+eget, facilisis sodales sem. ');
+		}else{
+			if(!is_array($content)){
+				$this->content = array($content);
+			}else{
+				$this->content = $content;
+			}
+		}
+		if($button1==NULL){
+			$this->button1 = 'Accept';
+		}else{
+			$this->button1 = $button1;
+		}
+		if($button1==NULL){
+			$this->button2 = 'Cancel';
+		}else{
+			$this->button2 = $button2;
+		}
+		$this->modalcard .= '
+	<div class="modal-card">
+		<header class="modal-card-head">
+			<p class="modal-card-title">'.$this->title.
+			'</p>
+		<button class="delete" aria-label="close"></button>
+		</header>
+		<section class="modal-card-body">';
+		$i = 0;
+		while($i<count($this->content)){
+			$this->modalcard .= $this->content[$i];
+			$i++;
+		}
+		$this->modalcard .= '</section>
+		<footer class="modal-card-foot">
+			<button class="button is-info">'.$this->button1.
+			'</button>
+			<button class="button">'.$this->button2.'</button>
+		</footer>
+	</div>';
+
+	}
+
+	function addButton($id = NULL,$title = NULL,$color = NULL,$size = NULL){
+
+		switch($color){
+			case 'primary':
+				$this->mode = ' is-primary';
+				break;
+			case 'link':
+				$this->mode = ' is-link';
+				break;
+			case 'info':
+				$this->mode = ' is-info';
+				break;
+			case 'success':
+				$this->mode = ' is-success';
+				break;
+			case 'warning':
+				$this->mode = ' is-warning';
+				break;
+			case 'danger':
+				$this->mode = ' is-danger';
+				break;
+			case 'black':
+				$this->mode = ' is-black';
+				break;
+			case 'dark':
+				$this->mode = ' is-dark';
+				break;
+			case 'light':
+				$this->mode = ' is-light';
+				break;
+			default:
+				$this->mode = ' is-info';
+				break;
+		}
+
+		switch($size){
+			case 'small':
+				$this->size = $this->mode.' is-small';
+				break;
+			case 'medium':
+				$this->size = $this->mode.' is-medium';
+				break;
+			case 'large':
+				$this->size = $this->mode.' is-large';
+				break;
+			default:
+				$this->size = NULL;
+				break;
+		}
+
+		if($id==NULL){
+			$this->id = $this->id;
+		}else{
+			$this->id = $id;
+		}
+		if($title==NULL){
+			$this->title = 'Modal Button';
+		}else{
+			$this->title = $title;
+		}
+
+		$this->button = '
+<button id="'.$this->id.'-button" class="button '.$this->mode.$this->size.
+			' modal-button" data-target="'.$this->id.'" aria-haspopup="true">
+	'.$this->title.'
+</button>';
+
+	}
+
+	function rendeModal($type = NULL,$output = TRUE){
+
+		switch($type){
+			case 'content':
+				if(!isset($this->modalcontent)){
+					$this->addContent();
+					$this->modal .= $this->modalcontent;
+				}else{
+					$this->modal .= $this->modalcontent;
+				}
+				break;
+			case 'image':
+				if(!isset($this->modalimg)){
+					$this->addImage();
+					$this->modal .= $this->modalimg;
+				}else{
+					$this->modal .= $this->modalimg;
+				}
+				break;
+			case 'card':
+				if(!isset($this->modalcard)){
+					$this->addCard();
+					$this->modal .= $this->modalcard;
+				}else{
+					$this->modal .= $this->modalcard;
+				}
+				break;
+			default:
+				if(!isset($this->modalcontent)){
+					$this->addContent();
+					$this->modal .= $this->modalcontent;
+				}else{
+					$this->modal .= $this->modalcontent;
+				}
+				break;
+		}
+
+		$this->modal .= '
+</div>';
+		// @FIXME
+// $this->modal .= '
+// <script>
+// document.querySelector(\'#'.$this->id.
+// '-button\').addEventListener(\'click\', function(e) {
+// var modalTwo = Bulma(\'#'.$this->id.
+// '\').modal();
+// modalTwo.open();
+// });
+// </script>';
+
+		$this->modal .= '
+<script>
+document.addEventListener(\'DOMContentLoaded\', function () {
+
+    // Modals
+
+    var rootEl = document.documentElement;
+    var allModals = getAll(\'.modal\');
+    var modalButtons = getAll(\'.modal-button\');
+    var modalCloses = getAll(\'.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button\');
+
+    if (modalButtons.length > 0) {
+        modalButtons.forEach(function (el) {
+            el.addEventListener(\'click\', function () {
+                var target = document.getElementById(el.dataset.target);
+                rootEl.classList.add(\'is-clipped\');
+                target.classList.add(\'is-active\');
+            });
+        });
+    }
+
+    if (modalCloses.length > 0) {
+        modalCloses.forEach(function (el) {
+            el.addEventListener(\'click\', function () {
+                closeModals();
+            });
+        });
+    }
+
+    document.addEventListener(\'keydown\', function (event) {
+        var e = event || window.event;
+        if (e.keyCode === 27) {
+            closeModals();
+        }
+    });
+
+    function closeModals() {
+        rootEl.classList.remove(\'is-clipped\');
+        allModals.forEach(function (el) {
+            el.classList.remove(\'is-active\');
+        });
+    }
+
+    // Functions
+
+    function getAll(selector) {
+        return Array.prototype.slice.call(document.querySelectorAll(selector), 0);
+    }
+});
+</script>';
+		if($output==TRUE){
+			echo $this->modal;
+		}else{
+			return $this->modal;
+		}
+
+	}
+
+	function renderButton($title = NULL,$output = TRUE){
+
+		if($output==TRUE){
+			if(!isset($this->button)){
+				$this->addButton();
+				echo $this->button;
+			}else{
+				echo $this->button;
+			}
+		}else{
+			if(!isset($this->button)){
+				$this->addButton();
+			}else{
+				return $this->button;
+			}
 		}
 
 	}

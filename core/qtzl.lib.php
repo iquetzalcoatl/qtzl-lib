@@ -1483,7 +1483,7 @@ eget, facilisis sodales sem. ');
 
 	}
 
-	function rendeModal($type = NULL,$output = TRUE){
+	function renderModal($type = NULL,$output = TRUE){
 
 		switch($type){
 			case 'content':

@@ -57,7 +57,7 @@ class block{
 	 * adds a single or an array of items into the block
 	 * @param $item string to add a new element to the block
 	 * @param $eachOne boolean to format each element given in the array
-	 * @example $block = new block(); $block->addItem($block);
+	 * @example $block = new block(); $block->addItem($item);
 	 * @version Bekermeye (1.2007)
 	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
 	 * @author Javier Garrido <javier-garrido@live.com>
@@ -234,7 +234,7 @@ class box{
 		$timestap = NULL,$text = NULL,$icon = NULL){
 
 		if($this->isRender==FALSE){
-			$this->body .= '
+			$this->body = '
     <article class="media">';
 
 			if($image!=NULL){
@@ -299,7 +299,7 @@ class box{
  */
 class button{
 
-	// TODO finish this class
+	// TODO add group buttons features
 	private $init = '';
 
 	private $body = '';
@@ -365,13 +365,13 @@ class button{
 		}
 		$initClass .= '"';
 
-		// Builds the init based on the given tag
+		// Builds the init with all the parameters given
 		$initAttr = $initType.$initName.$initValue.$initClass.$initDisabled;
 		$this->init = '<'.$tag.$initAttr.'>';
 
 		// Builds the body if the current tag is not input
 		if($tag!='input'){
-			$this->body = $text;
+			$this->body = '<span>'.$text.'</span>';
 		}
 
 		// Builds the end tag if the given one is not input
@@ -386,13 +386,6 @@ class button{
 	 * adds a single or an array of icons from Font Awesome 5 Library
 	 * (this function is only valid for the "button" and "a" html tags)
 	 * @param $icon string to add a new icon to the button
-	 * @param $type string to the type of icon (Font Awesome 5 Library free
-	 * types)
-	 * <li>fas -> for common icons</li>
-	 * <li>fab -> for brand icons</li>
-	 * @param $size string to set a size for the icon in the button
-	 * <li>small</li>
-	 * <li>medium</li>
 	 * @param $align string to set an alignment for the icon in the button
 	 * <li>left</li>
 	 * <li>right</li>
@@ -403,38 +396,37 @@ class button{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function addIcon($icon = NULL,$type = NULL,$size = NULL,$align = NULL){
+
+	// TODO check if the type can be improve it
+	function addIcon($icon = NULL,$align = NULL){
 
 		// Sets the default alignment and type
 		if($align==NULL){
 			$align = 'left';
 		}
 
-		if($type==NULL){
-			$type = 'fas';
-		}
+		// Adds the icon or icons to the button based on the align given
+		if($icon!=NULL){
 
-		// Creates the size class if it's given
-		if($size!=NULL){
-			$size = ' is-'.$size;
-		}
+			if(!is_array($icon)){
+				$icon = array($icon);
+			}
 
-		// Builds the html code for each part
-		$htmlIcon = '
-           <span class="icon'.$size.'">
-           <i class="'.$type.' fa-'.$icon.'"></i>
-           </span>
-           ';
+			$concat = '';
 
-		$htmlText = '<span>'.$this->body.'</span>';
+			for($i = 0;$i<count($icon);$i++){
+				$concat .= $icon[$i];
+			}
 
-		// Assembles both parts depending of the alignment of the icon given
-		if($align=='left'){
-			$this->body = $htmlIcon.$htmlText;
-		}elseif($align=='right'){
-			$this->body = $htmlText.$htmlIcon;
-		}else{
-			echo 'Try a valid alignment for the icon (left or rigth)';
+			if($align=='right'){
+
+				$this->body = $this->body.$concat;
+			}elseif($align=='left'){
+
+				$this->body = $concat.$this->body;
+			}else{
+				echo 'Set a valid aligment (left or right)';
+			}
 		}
 
 	}
@@ -454,6 +446,257 @@ class button{
 
 		$button = $this->init.$this->body.$this->end;
 		return $button;
+
+	}
+
+}
+
+/**
+ * qtzl-lib class content
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
+class content{
+
+	private $init = '';
+
+	private $body = '';
+
+	private $end = '';
+
+	/**
+	 * qtzl-lib class content
+	 * creates a content and initializes the html code
+	 * @example $content = new content();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function __construct($size = NULL){
+
+		if($size!=NULL){
+			$size = ' is-'.$size;
+		}
+		$this->init = '
+<div class="content'.$size.'">';
+		$this->end = '
+</div>';
+
+	}
+
+	/**
+	 * qtzl-lib content addItem function
+	 * adds a single or an array of items into the content
+	 * @param $item string to add a new element to the content
+	 * @param $eachOne boolean to format each element given in the array
+	 * @example $content = new content(); $content->addItem($item);
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function addItem($item = NULL,$eachOne = FALSE){
+
+		if($item!=NULL){
+
+			if(!is_array($item)){
+				$item = array($item);
+			}
+
+			if($eachOne==FALSE){
+
+				for($i = 0;$i<count($item);$i++){
+
+					$this->body .= $item[$i];
+				}
+			}else{
+				$this->body = $item;
+			}
+		}
+
+	}
+
+	/**
+	 * qtzl-lib content render function
+	 * assembles all parts of the content and returns all the html code
+	 * @return string
+	 * @example $content = new content(); $content->render();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function render(){
+
+		if(is_array($this->body)){
+			$content = '';
+			for($i = 0;$i<count($this->body);$i++){
+				$content .= $this->init.$this->body[$i].$this->end;
+			}
+
+			return $content;
+		}else{
+
+			$content = $this->init.$this->body.$this->end;
+			return $content;
+		}
+
+	}
+
+}
+
+/**
+ * qtzl-lib class delete
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
+class delete{
+
+	private $init = '';
+
+	private $end = '';
+
+	/**
+	 * qtzl-lib class delete
+	 * creates a delete and initializes the html code
+	 * @param $size string to set the delete's size
+	 * <li>small</li>
+	 * <li>medium</li>
+	 * <li>large</li>
+	 * @param $tag string to set the html tag for the delete
+	 * <li>a</li>
+	 * <li>button</li>
+	 * @example $delete = new delete();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function __construct($size = NULL,$tag = NULL){
+
+		if($tag==NULL){
+			$tag = 'a';
+		}
+		if($size!=NULL){
+			$size = ' is-'.$size;
+		}
+		$this->init = '<'.$tag.' class="delete'.$size.'"></a>';
+
+		$this->end = '</'.$tag.'>';
+
+	}
+
+	/**
+	 * qtzl-lib delete render function
+	 * assembles all parts of the delete and returns all the html code
+	 * @return string
+	 * @example $delete = new delete(); $delete->render();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function render(){
+
+		$delete = $this->init.$this->end;
+		return $delete;
+
+	}
+
+}
+
+/**
+ * qtzl-lib class icon
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
+class icon{
+
+	private $html = '';
+
+	/**
+	 * qtzl-lib class icon
+	 * creates a icon and initializes the html code
+	 * @param $iconName string to select an icon from Font Awesome 5 Free
+	 * Library
+	 * @param $color string to set the icon's color
+	 * @param $faType string to set the type of Font Awesome 5 Free Library icon
+	 * <li>fas -> for common icons</li>
+	 * <li>fab -> for brand icons</li>
+	 * @param $iconClass string to set the icon's container size
+	 * <li>small</li>
+	 * <li>medium</li>
+	 * <li>large</li>
+	 * @param $faClass string to set the icon size from Font Awesome 5 Library
+	 * sizes
+	 * <li>lg -> compatible with icon classes: default, medium and large</li>
+	 * <li>2x -> compatible with icon classes: medium and large</li>
+	 * <li>3x -> compatible with icon classes: large</li>
+	 * @example $icon = new icon();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function __construct($iconName = NULL,$color = NULL,$faType = NULL,
+		$iconClass = NULL,$faClass = NULL){
+
+		// Sets the default faType
+		if($faType==NULL){
+			$type = 'fas';
+		}
+
+		// Creates the color, icon and fa classes if it's given
+		if($color!=NULL){
+			$color = ' has-text-'.$color;
+		}
+
+		if($iconClass!=NULL){
+			$iconClass = ' is-'.$iconClass;
+		}
+
+		if($faClass!=NULL){
+			$faClass = ' fa-'.$faClass;
+		}
+
+		// Builds the html code for each part
+		$this->html = '
+           <span class="icon'.$iconClass.$color.'">
+           	<i class="fa'.$faType.$faClass.' fa-'.$iconName.'"></i>
+           </span>';
+
+	}
+
+	/**
+	 * qtzl-lib icon render function
+	 * assembles all parts of the icon and returns all the html code
+	 * @return string
+	 * @example $icon = new icon(); $icon->render();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function render(){
+
+		return $this->html;
 
 	}
 

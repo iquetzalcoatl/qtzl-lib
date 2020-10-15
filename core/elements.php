@@ -233,25 +233,24 @@ class box{
 	function mediaBox($image = NULL,$title = NULL,$account = NULL,
 		$timestap = NULL,$text = NULL,$icon = NULL){
 
-		if($this->isRender==FALSE){
-			$this->body = '
+		$this->body = '
     <article class="media">';
 
-			if($image!=NULL){
-				$this->body .= '
+		if($image!=NULL){
+			$this->body .= '
 	<div class="media-left">
 		<figure class="image is-64x64">
 			<img src="'.$image.'" alt="Image">
 		</figure>
 	</div>';
-			}
+		}
 
-			$this->body .= '
+		$this->body .= '
 	<div class="media-content">
 		<div class="content">
 			<p>
 				<strong>'.$title.'</strong> <small>'.$account.'</small> <small>'.$timestap.
-				'</small>
+			'</small>
 				<br>
 			'.$text.'
 			</p>
@@ -259,31 +258,30 @@ class box{
 		<nav class="level is-mobile">
 		<div class="level-left">';
 
-			if($icon!=NULL){
+		if($icon!=NULL){
 
-				if(!is_array($icon)){
+			if(!is_array($icon)){
 
-					$icon = array($icon);
-				}
+				$icon = array($icon);
+			}
 
-				for($i = 0;$i<count($icon);$i++){
-					$this->body .= '
+			for($i = 0;$i<count($icon);$i++){
+				$this->body .= '
 			<a class="level-item" aria-label="'.$icon[$i].
-						'">
+					'">
 				<span class="icon is-small">
 					<i class="fas fa-'.$icon[$i].'" aria-hidden="true"></i>
 				</span>
 			</a>';
-				}
 			}
+		}
 
-			$this->body .= '
+		$this->body .= '
 		</div>
 			</nav>
 		</div>
     </article>
                 ';
-		}
 
 	}
 
@@ -635,9 +633,6 @@ class icon{
 	 * @param $iconName string to select an icon from Font Awesome 5 Free
 	 * Library
 	 * @param $color string to set the icon's color
-	 * @param $faType string to set the type of Font Awesome 5 Free Library icon
-	 * <li>fas -> for common icons</li>
-	 * <li>fab -> for brand icons</li>
 	 * @param $iconClass string to set the icon's container size
 	 * <li>small</li>
 	 * <li>medium</li>
@@ -647,6 +642,9 @@ class icon{
 	 * <li>lg -> compatible with icon classes: default, medium and large</li>
 	 * <li>2x -> compatible with icon classes: medium and large</li>
 	 * <li>3x -> compatible with icon classes: large</li>
+	 * @param $faType string to set the type of Font Awesome 5 Free Library icon
+	 * <li>fas -> for common icons</li>
+	 * <li>fab -> for brand icons</li>
 	 * @example $icon = new icon();
 	 * @version Bekermeye (1.2007)
 	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
@@ -654,15 +652,17 @@ class icon{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function __construct($iconName = NULL,$color = NULL,$faType = NULL,
-		$iconClass = NULL,$faClass = NULL){
+	function __construct($iconName = NULL,$color = NULL,$iconClass = NULL,
+		$faClass = NULL,$faType = NULL){
+
+		// TODO Add FA icon variants
 
 		// Sets the default faType
 		if($faType==NULL){
-			$type = 'fas';
+			$faType = 'fa';
 		}
 
-		// Creates the color, icon and fa classes if it's given
+		// Creates the color, icon, animated and fa classes if it's given
 		if($color!=NULL){
 			$color = ' has-text-'.$color;
 		}
@@ -678,7 +678,7 @@ class icon{
 		// Builds the html code for each part
 		$this->html = '
            <span class="icon'.$iconClass.$color.'">
-           	<i class="fa'.$faType.$faClass.' fa-'.$iconName.'"></i>
+           	<i class="'.$faType.$faClass.' fa-'.$iconName.'"></i>
            </span>';
 
 	}

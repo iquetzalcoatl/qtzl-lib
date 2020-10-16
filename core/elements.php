@@ -394,8 +394,6 @@ class button{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-
-	// TODO check if the type can be improve it
 	function addIcon($icon = NULL,$align = NULL){
 
 		// Sets the default alignment and type
@@ -642,9 +640,10 @@ class icon{
 	 * <li>lg -> compatible with icon classes: default, medium and large</li>
 	 * <li>2x -> compatible with icon classes: medium and large</li>
 	 * <li>3x -> compatible with icon classes: large</li>
-	 * @param $faType string to set the type of Font Awesome 5 Free Library icon
-	 * <li>fas -> for common icons</li>
-	 * <li>fab -> for brand icons</li>
+	 * @param $faVar string to set a Font Awesome 5 variant to the icon
+	 * <li>pulse -> for an animated spinning icon </li>
+	 * <li>fw -> for a fixed width icon</li>
+	 * <li>border -> for a bordered icon</li>
 	 * @example $icon = new icon();
 	 * @version Bekermeye (1.2007)
 	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
@@ -653,22 +652,21 @@ class icon{
 	 * @license GNU General Public License Version 3
 	 */
 	function __construct($iconName = NULL,$color = NULL,$iconClass = NULL,
-		$faClass = NULL,$faType = NULL){
+		$faClass = NULL,$faVar = NULL){
 
-		// TODO Add FA icon variants
+		// TODO Add stacked feature
 
-		// Sets the default faType
-		if($faType==NULL){
-			$faType = 'fa';
-		}
-
-		// Creates the color, icon, animated and fa classes if it's given
+		// Creates the color, iconClass, faVar and faClass if it's given
 		if($color!=NULL){
 			$color = ' has-text-'.$color;
 		}
 
 		if($iconClass!=NULL){
 			$iconClass = ' is-'.$iconClass;
+		}
+
+		if($faVar!=NULL){
+			$faVar = ' fa-'.$faVar;
 		}
 
 		if($faClass!=NULL){
@@ -678,7 +676,7 @@ class icon{
 		// Builds the html code for each part
 		$this->html = '
            <span class="icon'.$iconClass.$color.'">
-           	<i class="'.$faType.$faClass.' fa-'.$iconName.'"></i>
+           	<i class="fas'.$faVar.$faClass.' fa-'.$iconName.'"></i>
            </span>';
 
 	}
@@ -702,4 +700,121 @@ class icon{
 
 }
 
+/**
+ * qtzl-lib class notification
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
+class notification{
+
+	private $init = '';
+
+	private $body = '';
+
+	private $end = '';
+
+	/**
+	 * qtzl-lib class notification
+	 * creates a notification and initializes the html code
+	 * @param $color string to set the notification's color
+	 * @param $isLight boolean to set the light colored $color given
+	 * @param $isDelete boolean to add a delete button in the notification
+	 * @example $notification = new notification();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function __construct($color = NULL,$isLight = FALSE,$isDelete = FALSE){
+
+		if($color!=NULL){
+			$color = ' is-'.$color;
+		}
+
+		$lightColored = '';
+
+		if($isLight!=FALSE){
+			$lightColored = ' is-light';
+		}
+
+		$this->init = '
+<div class="notification'.$color.$lightColored.'">';
+
+		if($isDelete==TRUE){
+			$this->body = '
+<button class="delete"></button>';
+		}
+
+		$this->end = '
+</div>';
+
+	}
+
+	/**
+	 * qtzl-lib notification addItem function
+	 * adds a single or an array of items into the notification
+	 * @param $item string to add a new element to the notification
+	 * @param $eachOne boolean to format each element given in the array
+	 * @example $n = new notification(); $notification->addItem($item);
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function addItem($item = NULL,$eachOne = FALSE){
+
+		if($item!=NULL){
+
+			if(!is_array($item)){
+				$item = array($item);
+			}
+
+			if($eachOne==FALSE){
+
+				for($i = 0;$i<count($item);$i++){
+
+					$this->body .= '
+	'.$item[$i];
+				}
+			}else{
+				$this->body = $item;
+			}
+		}
+
+	}
+
+	/**
+	 * qtzl-lib notification render function
+	 * assembles all parts of the notification and returns all the html code
+	 * @return string
+	 * @example $notification = new notification(); $notification->render();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function render(){
+
+		if(is_array($this->body)){
+			$notification = '';
+			for($i = 0;$i<count($this->body);$i++){
+				$notification .= $this->init.$this->body[$i].$this->end;
+			}
+
+			return $notification;
+		}else{
+
+			$notification = $this->init.$this->body.$this->end;
+			return $notification;
+		}
+
+	}
+
+}
 ?>

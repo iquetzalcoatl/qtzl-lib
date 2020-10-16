@@ -676,7 +676,7 @@ class icon{
 		// Builds the html code for each part
 		$this->html = '
            <span class="icon'.$iconClass.$color.'">
-           	<i class="fas'.$faVar.$faClass.' fa-'.$iconName.'"></i>
+           	<i class="fa'.$faVar.$faClass.' fa-'.$iconName.'"></i>
            </span>';
 
 	}

@@ -804,7 +804,8 @@ class notification{
 		if(is_array($this->body)){
 			$notification = '';
 			for($i = 0;$i<count($this->body);$i++){
-				$notification .= $this->init.$this->body[$i].$this->end;
+				$notification .= $this->init.'
+	'.$this->body[$i].$this->end;
 			}
 
 			return $notification;
@@ -813,6 +814,178 @@ class notification{
 			$notification = $this->init.$this->body.$this->end;
 			return $notification;
 		}
+
+	}
+
+}
+
+/**
+ * qtzl-lib class progressBar
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
+class progressBar{
+
+	private $html = '';
+
+	/**
+	 * qtzl-lib class progressBar
+	 * creates a progressBar and initializes the html code
+	 * @param $value string to set the progress of the bar
+	 * @param $max string to set the maximun amount of the bar
+	 * @param $color string to set the bar's color
+	 * @param $size string to set the bar's size
+	 * <li>small</li>
+	 * <li>medium</li>
+	 * <li>large</li>
+	 * @example $notification = new notification();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function __construct($value = NULL,$max = NULL,$color = NULL,$size = NULL){
+
+		// Sets the size and color
+		if($size!=NULL){
+			$size = ' is-'.$size;
+		}
+
+		if($color!=NULL){
+			$color = ' is-'.$color;
+		}
+
+		// Creates value and max propierties if they're given
+		if($value!=NULL){
+			$value = ' value="'.$value.'"';
+		}
+
+		if($max!=NULL){
+			$max = ' max="'.$max.'"';
+		}
+
+		$mods = $size.$color;
+		$props = $value.$max;
+
+		// Creates the html with the parameters given
+		$this->html = '
+<progress class="progress'.$mods.'"'.$props.'></progress>';
+
+	}
+
+	/**
+	 * qtzl-lib progressBar render function
+	 * assembles all parts of the progressBar and returns all the html code
+	 * @return string
+	 * @example $progressBar = new progressBar(); $progressBar->render();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function render(){
+
+		return $this->html;
+
+	}
+
+}
+
+/**
+ * qtzl-lib class tag
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
+class tag{
+
+	// TODO Finish this class
+}
+
+/**
+ * qtzl-lib class title
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
+class title{
+
+	private $html = '';
+
+	/**
+	 * qtzl-lib class title
+	 * creates a title or a subtitle and initializes the html code
+	 * @param $text string to set the shown text
+	 * @param $type string to set the type of title
+	 * <li>title</li>
+	 * <li>subtitle</li>
+	 * @param $size string to set the size of the title or subtitle
+	 * <li>1</li>
+	 * <li>2</li>
+	 * <li>3</li>
+	 * <li>4</li>
+	 * <li>5</li>
+	 * <li>6</li>
+	 * @param $isSpaced boolean to set if the title is spaced or not
+	 * @example $title = new title();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function __construct($text = NULL,$type = NULL,$size = NULL,
+		$isSpaced = FALSE){
+
+		// Sets the default type and text
+		if($type==NULL){
+			$type = 'title';
+		}
+
+		if($text==NULL){
+			$text = 'I\'m default '.$type.'';
+		}
+
+		// Sets the size if it's given
+		if($size!=NULL){
+			$size = ' is-'.$size;
+		}
+
+		// Checks whether it should be spaced or not
+		$spaced = '';
+		if($isSpaced==TRUE){
+			$spaced = ' is-spaced';
+		}
+
+		// Builds the html code
+		$this->html = '
+<p class="'.$type.''.$size.''.$spaced.'">'.$text.'</p>';
+
+	}
+
+	/**
+	 * qtzl-lib title render function
+	 * assembles all parts of the title and returns all the html code
+	 * @return string
+	 * @example $title = new title(); $title->render();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function render(){
+
+		return $this->html;
 
 	}
 

@@ -396,7 +396,7 @@ class button{
 	 */
 	function addIcon($icon = NULL,$align = NULL){
 
-		// Sets the default alignment and type
+		// Sets the default alignment
 		if($align==NULL){
 			$align = 'left';
 		}
@@ -431,7 +431,7 @@ class button{
 	 * qtzl-lib button render function
 	 * assembles all parts of the button and returns all the html code
 	 * @return string
-	 * @example $button = new button(); $box->button();
+	 * @example $button = new button(); $button->render();
 	 * @version Bekermeye (1.2007)
 	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
 	 * @author Javier Garrido <javier-garrido@live.com>
@@ -906,7 +906,121 @@ class progressBar{
  */
 class tag{
 
-	// TODO Finish this class
+	// TODO add group tags features
+	private $init = '';
+
+	private $body = '';
+
+	private $end = '';
+
+	/**
+	 * qtzl-lib class tag
+	 * creates a button and initializes the html code
+	 * @param $text string to set the text shown in the tag
+	 * @param $mods string to set all the modifiers of the tag
+	 * @param $tag string to set the type of html tag for the tag
+	 * @example $tag = new tag();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function __construct($text = NULL,$mods = NULL,$hasDelete = FALSE){
+
+		// Concatenates all the modifiers given
+		$initClass = '';
+		if($mods!=NULL){
+			if(!is_array($mods)){
+				$mods = array($mods);
+			}
+			for($i = 0;$i<count($mods);$i++){
+				$initClass .= ' is-'.$mods[$i];
+			}
+		}
+
+		// Builds each part of the html code
+		$this->init = '
+<span class="tag'.$initClass.'">';
+
+		$this->body = '
+	<span>'.$text.'</span>';
+
+		if($hasDelete==TRUE){
+			$this->end .= '
+	<button class="delete is-small"></button>';
+		}
+
+		$this->end .= '
+</span>';
+
+	}
+
+	/**
+	 * qtzl-lib tag addIcon function
+	 * adds a single or an array of icons from Font Awesome 5 Library
+	 * @param $icon string to add a new icon to the tag
+	 * @param $align string to set an alignment for the icon in the tag
+	 * <li>left</li>
+	 * <li>right</li>
+	 * @example $tag = new tag(); $tag->addIcon($icon);
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function addIcon($icon = NULL,$align = NULL){
+
+		// Sets the default alignment
+		if($align==NULL){
+			$align = 'left';
+		}
+
+		// Adds the icon or icons to the tag based on the align given
+		if($icon!=NULL){
+
+			if(!is_array($icon)){
+				$icon = array($icon);
+			}
+
+			$concat = '';
+
+			for($i = 0;$i<count($icon);$i++){
+				$concat .= $icon[$i];
+			}
+
+			if($align=='right'){
+
+				$this->body = $this->body.$concat;
+			}elseif($align=='left'){
+
+				$this->body = $concat.$this->body;
+			}else{
+				echo 'Set a valid aligment (left or right)';
+			}
+		}
+
+	}
+
+	/**
+	 * qtzl-lib tag render function
+	 * assembles all parts of the tag and returns all the html code
+	 * @return string
+	 * @example $tag = new tag(); $tag->render();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function render(){
+
+		$tag = $this->init.$this->body.$this->end;
+		return $tag;
+
+	}
+
 }
 
 /**

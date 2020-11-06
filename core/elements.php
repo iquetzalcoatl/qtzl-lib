@@ -903,7 +903,6 @@ class progressBar{
  */
 class tag{
 
-	// TODO add the html <a> tag option
 	private $init = '';
 
 	private $body = '';
@@ -923,7 +922,15 @@ class tag{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function __construct($text = NULL,$mods = NULL,$hasDelete = FALSE){
+	function __construct($text = NULL,$mods = NULL,$hasDelete = FALSE,
+		$aTag = FALSE){
+
+		// Sets the htmlTag
+		if($aTag==FALSE){
+			$htmlTag = 'tag';
+		}else{
+			$htmlTag = 'a';
+		}
 
 		// Concatenates all the modifiers given
 		$initClass = '';
@@ -938,7 +945,7 @@ class tag{
 
 		// Builds each part of the html code
 		$this->init = '
-<span class="tag'.$initClass.'">';
+<'.$htmlTag.' class="tag'.$initClass.'">';
 
 		$this->body = '
 	<span>'.$text.'</span>';
@@ -949,7 +956,7 @@ class tag{
 		}
 
 		$this->end .= '
-</span>';
+</'.$htmlTag.'>';
 
 	}
 
@@ -1216,12 +1223,13 @@ class groupButton{
  */
 class groupTag{
 
-	// TODO finish this class
 	private $init = '';
 
 	private $body = '';
 
 	private $end = '';
+
+	private $isField = FALSE;
 
 	/**
 	 * qtzl-lib class groupTag
@@ -1248,6 +1256,7 @@ class groupTag{
 			$class .= 'tags';
 		}else{
 			$class .= 'field';
+			$this->isField = TRUE;
 		}
 
 		if($hasAddOns==TRUE){
@@ -1257,8 +1266,16 @@ class groupTag{
 		if(!is_null($alignment)&&$isList==TRUE){
 			$class .= ' is-'.$alignment;
 		}
+
+		// Builds the init and the end
 		$this->init = '
-<div class="'.$class.'">';
+<div class="'.$class;
+
+		if($isList==FALSE){
+			$this->init .= ' is-grouped is-grouped-multiline';
+		}
+
+		$this->init .= '">';
 
 		$this->end = '
 </div>';
@@ -1283,9 +1300,23 @@ class groupTag{
 			if(!is_array($tag)){
 				$tag = array($tag);
 			}
+
+			// Only builds this for field, not list
+			if($this->isField==TRUE){
+				$controlInit = '
+<div class="control">';
+				$controlEnd = '
+</div>';
+			}else{
+				$controlInit = '';
+				$controlEnd = '';
+			}
+
+			// Adds every tag of the array into the groupTag (field or list)
 			for($i = 0;$i<count($tag);$i++){
-				$this->body .= '
-	'.$tag[$i];
+				$this->body .= $controlInit.'
+	'.$tag[$i].'
+'.$controlEnd;
 			}
 		}
 

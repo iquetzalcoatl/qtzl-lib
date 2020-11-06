@@ -297,7 +297,6 @@ class box{
  */
 class button{
 
-	// TODO add group buttons features
 	private $init = '';
 
 	private $body = '';
@@ -654,8 +653,6 @@ class icon{
 	function __construct($iconName = NULL,$color = NULL,$iconClass = NULL,
 		$faClass = NULL,$faVar = NULL){
 
-		// TODO Add stacked feature
-
 		// Creates the color, iconClass, faVar and faClass if it's given
 		if($color!=NULL){
 			$color = ' has-text-'.$color;
@@ -906,7 +903,7 @@ class progressBar{
  */
 class tag{
 
-	// TODO add group tags features
+	// TODO add the html <a> tag option
 	private $init = '';
 
 	private $body = '';
@@ -915,7 +912,7 @@ class tag{
 
 	/**
 	 * qtzl-lib class tag
-	 * creates a button and initializes the html code
+	 * creates a tag and initializes the html code
 	 * @param $text string to set the text shown in the tag
 	 * @param $mods string to set all the modifiers of the tag
 	 * @param $tag string to set the type of html tag for the tag
@@ -1100,6 +1097,336 @@ class title{
 	function render(){
 
 		return $this->html;
+
+	}
+
+}
+
+/**
+ * qtzl-lib class groupButton
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
+class groupButton{
+
+	private $init = '';
+
+	private $body = '';
+
+	private $end = '';
+
+	/**
+	 * qtzl-lib class groupButton
+	 * creates a group or list of buttons
+	 * @param $hasAddOns boolean determine if all the buttons will be attached
+	 * @param $alignment string to set the alignment of all buttons (only for
+	 * lists)
+	 * <li>left</li>
+	 * <li>centered</li>
+	 * <li>right</li>
+	 * @param $isList boolean to set if the buttons will be grouped in a list
+	 * or a field
+	 * @example $gBtn = new groupButton();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function __construct($hasAddOns = FALSE,$alignment = NULL,$isList = TRUE){
+
+		$class = '';
+		if($isList==TRUE){
+			$class .= 'buttons';
+		}else{
+			$class .= 'field';
+		}
+
+		if($hasAddOns==TRUE){
+			$class .= ' has-addons';
+		}
+
+		if(!is_null($alignment)&&$isList==TRUE){
+			$class .= ' is-'.$alignment;
+		}
+		$this->init = '
+<div class="'.$class.'">';
+
+		$this->end = '
+</div>';
+
+	}
+
+	/**
+	 * qtzl-lib groupButton addButton function
+	 * adds a single or an array of buttons
+	 * @param $button string to add a new button to the group or list
+	 * @example $gBtn = new groupButton(); $groupButton->addButton($button);
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function addButton($button = NULL){
+
+		if($button!=NULL){
+
+			if(!is_array($button)){
+				$button = array($button);
+			}
+			for($i = 0;$i<count($button);$i++){
+				$this->body .= '
+	'.$button[$i];
+			}
+		}
+
+	}
+
+	/**
+	 * qtzl-lib groupButton render function
+	 * assembles all parts of the groupButton and returns all the html code
+	 * @return string
+	 * @example $gBtn = new groupButton(); $groupButton->render();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function render(){
+
+		$button = $this->init.$this->body.$this->end;
+		return $button;
+
+	}
+
+}
+
+/**
+ * qtzl-lib class groupTag
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
+class groupTag{
+
+	// TODO finish this class
+	private $init = '';
+
+	private $body = '';
+
+	private $end = '';
+
+	/**
+	 * qtzl-lib class groupTag
+	 * creates a group or list of tags
+	 * @param $hasAddOns boolean determine if all the tags will be attached
+	 * @param $alignment string to set the alignment of all tags (only for
+	 * lists)
+	 * <li>left</li>
+	 * <li>centered</li>
+	 * <li>right</li>
+	 * @param $isList boolean to set if the tags will be grouped in a list
+	 * or a field
+	 * @example $gTag = new groupTag();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function __construct($hasAddOns = FALSE,$alignment = NULL,$isList = TRUE){
+
+		$class = '';
+		if($isList==TRUE){
+			$class .= 'tags';
+		}else{
+			$class .= 'field';
+		}
+
+		if($hasAddOns==TRUE){
+			$class .= ' has-addons';
+		}
+
+		if(!is_null($alignment)&&$isList==TRUE){
+			$class .= ' is-'.$alignment;
+		}
+		$this->init = '
+<div class="'.$class.'">';
+
+		$this->end = '
+</div>';
+
+	}
+
+	/**
+	 * qtzl-lib groupTag addTag function
+	 * adds a single or an array of tags
+	 * @param $tag string to add a new tag to the group or list
+	 * @example $gTag = new groupTag(); $groupTag->addTag($tag);
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function addTag($tag = NULL){
+
+		if($tag!=NULL){
+
+			if(!is_array($tag)){
+				$tag = array($tag);
+			}
+			for($i = 0;$i<count($tag);$i++){
+				$this->body .= '
+	'.$tag[$i];
+			}
+		}
+
+	}
+
+	/**
+	 * qtzl-lib groupTag render function
+	 * assembles all parts of the groupTag and returns all the html code
+	 * @return string
+	 * @example $gTag = new groupTag(); $groupTag->render();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function render(){
+
+		$tag = $this->init.$this->body.$this->end;
+		return $tag;
+
+	}
+
+}
+
+/**
+ * qtzl-lib class iconStacked
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
+class iconStacked{
+
+	private $init = '';
+
+	private $body = '';
+
+	private $end = '';
+
+	/**
+	 * qtzl-lib class iconStacked
+	 * creates an iconStacked
+	 * @param $contLarge boolean to set a large icon's container
+	 * @param $iconsLarge boolean to set large icons
+	 * @example $iStacked = new iconStacked();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function __construct($contLarge = FALSE,$iconsLarge = FALSE){
+
+		// Sets the sizes of both the container and icon
+		if($contLarge==FALSE){
+			$contSize = ' is-medium';
+		}else{
+			$contSize = ' is-large';
+		}
+
+		if($iconsLarge==TRUE&&$contLarge==TRUE){
+			$iconsSize = ' fa-lg';
+		}else{
+			$iconsSize = '';
+		}
+
+		// Builds the init and the end
+		$this->init = '
+<span class="icon'.$contSize.'">
+  <span class="fa-stack'.$iconsSize.'">';
+
+		$this->end = '
+  </span>
+</span>';
+
+	}
+
+	/**
+	 * qtzl-lib iconStacked addIcon function
+	 * adds a single icon to be stacked (icons are stacked from first to last,
+	 * the last being the most front icon)
+	 * @param $name string to set the icon from FontAwesome 5 Free Library
+	 * @param $color string to set the icon's color.$this
+	 * @param $isLarge boolean to set if the icon to be stacked will be larger
+	 * than the other ones.
+	 * @param $faVar string to set a variant for the icon from FontAwesome 5
+	 * variants
+	 * <li>pulse -> for an animated spinning icon </li>
+	 * <li>fw -> for a fixed width icon</li>
+	 * <li>border -> for a bordered icon</li>
+	 * @example $iStacked = new iconStacked(); $iStacked->iconStacked($name);
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function addIcon($name = NULL,$color = NULL,$isLarge = FALSE,$faVar = NULL){
+
+		// Sets the variables with the parameters given
+		if($name==NULL){
+			$name = 'fa';
+		}
+
+		if($color!=NULL){
+			$color = ' has-text-'.$color;
+		}
+
+		if($isLarge!=TRUE){
+			$size = ' fa-stack-1x';
+		}else{
+			$size = ' fa-stack-2x';
+		}
+
+		if($faVar!=NULL){
+			$faVar = ' fa-'.$faVar;
+		}
+
+		// Builds the body
+		$this->body .= '
+    <i class="fa fa-'.$name.$size.$color.$faVar.'"></i>';
+
+	}
+
+	/**
+	 * qtzl-lib iconStacked render function
+	 * assembles all parts of the iconStacked and returns all the html code
+	 * @return string
+	 * @example $iStacked = new iconStacked(); $iStacked->render();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+	function render(){
+
+		$iconStacked = $this->init.$this->body.$this->end;
+		return $iconStacked;
 
 	}
 

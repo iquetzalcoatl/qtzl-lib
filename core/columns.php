@@ -24,36 +24,79 @@ class columns{
 
 	private $end = '';
 
-	function __construct(){
+	function __construct($responsive = TRUE,$gapless = FALSE,$multiline = FALSE,
+		$vcentered = FALSE,$hcentered = FALSE){
+
+		$mods = '';
+
+		if($responsive!=TRUE){
+			$mods .= ' is-desktop';
+		}else{
+			$mods .= ' is-mobile';
+		}
+
+		if($gapless!=FALSE){
+			$mods .= ' is-gapless';
+		}
+
+		if($multiline!=FALSE){
+			$mods .= ' is-multiline';
+		}
+
+		if($vcentered!=FALSE){
+			$mods .= ' is-vcentered';
+		}
+
+		if($hcentered!=FALSE){
+			$mods .= ' is-centered';
+		}
 
 		$this->init = '
-<div class="columns">';
+<div class="columns'.$mods.'">';
 
 		$this->end = '
 </div>';
 
 	}
 
-	function addColumn($item = NULL,$size = NULL){
+	function addColumns($item = NULL,$size = NULL,$num = NULL){
 
 		if($item!=NULL){
-			if(!is_array($item)){
-				$item = array($item);
+
+			// Converts size and num to an array if necessary
+			if(!is_array($size)){
+				$size = array($size);
 			}
 
-			if($size!=NULL){
-				$size = ' is-'.$size;
+			if(!is_array($num)){
+				$num = array($num);
 			}
 
-			for($i = 0;$i<count($item);$i++){
-				$mod = '';
-				if($i==0){
-					$mod = $size;
+			// Checks if both arrays have the same amount of values
+			if(count($num)==count($size)){
+				// Converts item to an array if necessary
+				if(!is_array($item)){
+					$item = array($item);
 				}
-				$this->body .= '
+				// Creates the columns for each value in item
+				for($i = 0;$i<count($item);$i++){
+					$mod = '';
+					// Checks if the current column to create is in the array
+					if(in_array($i+1,$num)){
+						// Brings the position of the given column in the array
+						$pos = array_search($i+1,$num);
+						// Assigns the size modifier given, based on the
+						// position
+						$mod .= ' is-'.$size[$pos];
+					}
+					// Creates the column
+					$this->body .= '
   <div class="column'.$mod.'">
     '.$item[$i].'
   </div>';
+				}
+			}else{
+				Echo 'Not the same amount of values in size and num arrays';
 			}
 		}
 

@@ -15,15 +15,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
+/**
+ * qtzl-lib class columns
+ * create dynamic columns
+ * @version Bekermeye (1.2007)
+ * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+ * @author Javier Garrido <javier-garrido@live.com>
+ * @author Enrique Canto <eacm97@hotmail.com>
+ * @license GNU General Public License Version 3
+ */
 class columns{
 
-	// TODO Finish this class
+	// TODO Implement the offset propiertys
 	private $init = '';
 
 	private $body = '';
 
 	private $end = '';
 
+	/**
+	 * qtzl-lib class columns
+	 * creates a column or columns and initializes the html code
+	 * @example $columns = new columns();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
 	function __construct($responsive = TRUE,$gapless = FALSE,$multiline = FALSE,
 		$vcentered = FALSE,$hcentered = FALSE){
 
@@ -59,6 +79,19 @@ class columns{
 
 	}
 
+	/**
+	 * qtzl-lib columns addColumns function
+	 * adds a single or an array of items into the columns
+	 * @param $item string to add a new element into a column
+	 * @param $size string set the size modifier to specific column
+	 * @param $num int to set the specific column or columns to be modified
+	 * @example $columns = new columns(); $columns->addColumn($item);
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
 	function addColumns($item = NULL,$size = NULL,$num = NULL){
 
 		if($item!=NULL){
@@ -102,6 +135,17 @@ class columns{
 
 	}
 
+	/**
+	 * qtzl-lib columns render function
+	 * assembles all parts of the columns and returns all the html code
+	 * @return string
+	 * @example $columns = new columns(); $columns->render();
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
 	function render(){
 
 		$columns = $this->init.$this->body.$this->end;

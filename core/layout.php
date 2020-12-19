@@ -53,10 +53,10 @@ class container{
 
 		$this->init = '
 <div class="container'.$class.'">
-        ';
+';
 		$this->end = '
 </div>
-        ';
+';
 
 	}
 
@@ -64,6 +64,7 @@ class container{
 	 * qtzl-lib container addItem function
 	 * adds a single or an array of items into the container
 	 * @param $item string to add a new element to the container
+	 * @param $eachOne boolean to format each element given in the array
 	 * @example $container = new container(); $container->addItem($item);
 	 * @version Bekermeye (1.2007)
 	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
@@ -71,17 +72,22 @@ class container{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function addItem($item = NULL){
+	function addItem($item = NULL,$eachOne = FALSE){
 
 		if($item!=NULL){
-			if(!is_array($item)){
 
+			if(!is_array($item)){
 				$item = array($item);
 			}
 
-			for($i = 0;$i<count($item);$i++){
+			if($eachOne==FALSE){
 
-				$this->body .= $item[$i];
+				for($i = 0;$i<count($item);$i++){
+
+					$this->body .= $item[$i];
+				}
+			}else{
+				$this->body = $item;
 			}
 		}
 
@@ -100,8 +106,18 @@ class container{
 	 */
 	function render(){
 
-		$box = $this->init.$this->body.$this->end;
-		return $box;
+		if(is_array($this->body)){
+			$container = '';
+			for($i = 0;$i<count($this->body);$i++){
+				$container .= $this->init.$this->body[$i].$this->end;
+			}
+
+			return $container;
+		}else{
+
+			$container = $this->init.$this->body.$this->end;
+			return $container;
+		}
 
 	}
 

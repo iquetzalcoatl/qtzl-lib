@@ -88,6 +88,7 @@ class block{
 	/**
 	 * qtzl-lib block render function
 	 * assembles all parts of the block and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $block = new block(); $block->render();
 	 * @version Bekermeye (1.2007)
@@ -96,18 +97,21 @@ class block{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
 		if(is_array($this->body)){
 			$block = '';
 			for($i = 0;$i<count($this->body);$i++){
 				$block .= $this->init.$this->body[$i].$this->end;
 			}
-
-			return $block;
 		}else{
 
 			$block = $this->init.$this->body.$this->end;
+		}
+
+		if($print==TRUE){
+			echo $block;
+		}else{
 			return $block;
 		}
 
@@ -188,6 +192,7 @@ class box{
 	/**
 	 * qtzl-lib box render function
 	 * assembles all parts of the box and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $box = new box(); $box->render();
 	 * @version Bekermeye (1.2007)
@@ -196,18 +201,21 @@ class box{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
 		if(is_array($this->body)){
 			$box = '';
 			for($i = 0;$i<count($this->body);$i++){
 				$box .= $this->init.$this->body[$i].$this->end;
 			}
-
-			return $box;
 		}else{
 
 			$box = $this->init.$this->body.$this->end;
+		}
+
+		if($print==TRUE){
+			echo $box;
+		}else{
 			return $box;
 		}
 
@@ -429,6 +437,7 @@ class button{
 	/**
 	 * qtzl-lib button render function
 	 * assembles all parts of the button and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $button = new button(); $button->render();
 	 * @version Bekermeye (1.2007)
@@ -437,10 +446,15 @@ class button{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
 		$button = $this->init.$this->body.$this->end;
-		return $button;
+
+		if($print==TRUE){
+			echo $button;
+		}else{
+			return $button;
+		}
 
 	}
 
@@ -520,6 +534,7 @@ class content{
 	/**
 	 * qtzl-lib content render function
 	 * assembles all parts of the content and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $content = new content(); $content->render();
 	 * @version Bekermeye (1.2007)
@@ -528,18 +543,21 @@ class content{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
 		if(is_array($this->body)){
 			$content = '';
 			for($i = 0;$i<count($this->body);$i++){
 				$content .= $this->init.$this->body[$i].$this->end;
 			}
-
-			return $content;
 		}else{
 
 			$content = $this->init.$this->body.$this->end;
+		}
+
+		if($print==TRUE){
+			echo $content;
+		}else{
 			return $content;
 		}
 
@@ -595,6 +613,7 @@ class delete{
 	/**
 	 * qtzl-lib delete render function
 	 * assembles all parts of the delete and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $delete = new delete(); $delete->render();
 	 * @version Bekermeye (1.2007)
@@ -603,10 +622,15 @@ class delete{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
 		$delete = $this->init.$this->end;
-		return $delete;
+
+		if($print==TRUE){
+			echo $delete;
+		}else{
+			return $delete;
+		}
 
 	}
 
@@ -681,6 +705,7 @@ class icon{
 	/**
 	 * qtzl-lib icon render function
 	 * assembles all parts of the icon and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $icon = new icon(); $icon->render();
 	 * @version Bekermeye (1.2007)
@@ -689,9 +714,13 @@ class icon{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
-		return $this->html;
+		if($print==TRUE){
+			echo $this->html;
+		}else{
+			return $this->html;
+		}
 
 	}
 
@@ -788,6 +817,7 @@ class notification{
 	/**
 	 * qtzl-lib notification render function
 	 * assembles all parts of the notification and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $notification = new notification(); $notification->render();
 	 * @version Bekermeye (1.2007)
@@ -796,7 +826,7 @@ class notification{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
 		if(is_array($this->body)){
 			$notification = '';
@@ -804,11 +834,14 @@ class notification{
 				$notification .= $this->init.'
 	'.$this->body[$i].$this->end;
 			}
-
-			return $notification;
 		}else{
 
 			$notification = $this->init.$this->body.$this->end;
+		}
+
+		if($print==TRUE){
+			echo $notification;
+		}else{
 			return $notification;
 		}
 
@@ -877,6 +910,7 @@ class progressBar{
 	/**
 	 * qtzl-lib progressBar render function
 	 * assembles all parts of the progressBar and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $progressBar = new progressBar(); $progressBar->render();
 	 * @version Bekermeye (1.2007)
@@ -885,9 +919,13 @@ class progressBar{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
-		return $this->html;
+		if($print==TRUE){
+			echo $this->html;
+		}else{
+			return $this->html;
+		}
 
 	}
 
@@ -914,7 +952,7 @@ class tag{
 	 * creates a tag and initializes the html code
 	 * @param $text string to set the text shown in the tag
 	 * @param $mods string to set all the modifiers of the tag
-	 * @param $tag string to set the type of html tag for the tag
+	 * @param $aTag boolean to set an html "a" tag
 	 * @example $tag = new tag();
 	 * @version Bekermeye (1.2007)
 	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
@@ -1010,6 +1048,7 @@ class tag{
 	/**
 	 * qtzl-lib tag render function
 	 * assembles all parts of the tag and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $tag = new tag(); $tag->render();
 	 * @version Bekermeye (1.2007)
@@ -1018,10 +1057,15 @@ class tag{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
 		$tag = $this->init.$this->body.$this->end;
-		return $tag;
+
+		if($print==TRUE){
+			echo $tag;
+		}else{
+			return $tag;
+		}
 
 	}
 
@@ -1093,6 +1137,7 @@ class title{
 	/**
 	 * qtzl-lib title render function
 	 * assembles all parts of the title and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $title = new title(); $title->render();
 	 * @version Bekermeye (1.2007)
@@ -1101,9 +1146,13 @@ class title{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
-		return $this->html;
+		if($print==TRUE){
+			echo $this->html;
+		}else{
+			return $this->html;
+		}
 
 	}
 
@@ -1196,6 +1245,7 @@ class groupButton{
 	/**
 	 * qtzl-lib groupButton render function
 	 * assembles all parts of the groupButton and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $gBtn = new groupButton(); $groupButton->render();
 	 * @version Bekermeye (1.2007)
@@ -1204,10 +1254,15 @@ class groupButton{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
-		$button = $this->init.$this->body.$this->end;
-		return $button;
+		$gButton = $this->init.$this->body.$this->end;
+
+		if($print==TRUE){
+			echo $gButton;
+		}else{
+			return $gButton;
+		}
 
 	}
 
@@ -1325,6 +1380,7 @@ class groupTag{
 	/**
 	 * qtzl-lib groupTag render function
 	 * assembles all parts of the groupTag and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $gTag = new groupTag(); $groupTag->render();
 	 * @version Bekermeye (1.2007)
@@ -1333,10 +1389,14 @@ class groupTag{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
-		$tag = $this->init.$this->body.$this->end;
-		return $tag;
+		$gTag = $this->init.$this->body.$this->end;
+		if($print==TRUE){
+			echo $gTag;
+		}else{
+			return $gTag;
+		}
 
 	}
 
@@ -1446,6 +1506,7 @@ class iconStacked{
 	/**
 	 * qtzl-lib iconStacked render function
 	 * assembles all parts of the iconStacked and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $iStacked = new iconStacked(); $iStacked->render();
 	 * @version Bekermeye (1.2007)
@@ -1454,10 +1515,15 @@ class iconStacked{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
 		$iconStacked = $this->init.$this->body.$this->end;
-		return $iconStacked;
+
+		if($print==TRUE){
+			echo $iconStacked;
+		}else{
+			return $iconStacked;
+		}
 
 	}
 

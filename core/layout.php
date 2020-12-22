@@ -96,6 +96,7 @@ class container{
 	/**
 	 * qtzl-lib container render function
 	 * assembles all parts of the container and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $container = new box(); $container->render();
 	 * @version Bekermeye (1.2007)
@@ -104,18 +105,21 @@ class container{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
 		if(is_array($this->body)){
 			$container = '';
 			for($i = 0;$i<count($this->body);$i++){
 				$container .= $this->init.$this->body[$i].$this->end;
 			}
-
-			return $container;
 		}else{
 
 			$container = $this->init.$this->body.$this->end;
+		}
+
+		if($print==TRUE){
+			echo $container;
+		}else{
 			return $container;
 		}
 
@@ -226,6 +230,7 @@ class level{
 	/**
 	 * qtzl-lib level render function
 	 * assembles all parts of the level and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $level = new level(); $level->render();
 	 * @version Bekermeye (1.2007)
@@ -234,7 +239,7 @@ class level{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
 		if($this->lvlLeft!=NULL){
 			$lvlAlign = '
@@ -258,7 +263,12 @@ class level{
 		}
 		$this->body = $this->lvlLeft.$this->body.$this->lvlRight;
 		$level = $this->init.$this->body.$this->end;
-		return $level;
+
+		if($print==TRUE){
+			echo $level;
+		}else{
+			return $level;
+		}
 
 	}
 
@@ -355,6 +365,7 @@ class mediaObject{
 	/**
 	 * qtzl-lib mediaObject render function
 	 * assembles all parts of the mediaObject and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $mediaObject = new mediaObject(); $mediaObject->render();
 	 * @version Bekermeye (1.2007)
@@ -363,7 +374,7 @@ class mediaObject{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print){
 
 		if($this->mediaLeft!=NULL){
 			$mediaAlign = '
@@ -397,7 +408,12 @@ class mediaObject{
 		}
 		$body = $this->mediaLeft.$this->mediaCont.$this->mediaRight;
 		$mediaObject = $this->init.$body.$this->end;
-		return $mediaObject;
+
+		if($print==TRUE){
+			echo $mediaObject;
+		}else{
+			return $mediaObject;
+		}
 
 	}
 
@@ -476,14 +492,14 @@ class hero{
 
 		$this->body = '
 <div class="hero-body">
-	<div class="container">
-		<h1 class="title">
+  <div class="container">
+    <h1 class="title">
 			'.$title.'
-		</h1>
-		<h2 class="subtitle">
+    </h1>
+    <h2 class="subtitle">
 			'.$subtitle.'
-		</h2>
-	</div>
+    </h2>
+  </div>
 </div>
 ';
 
@@ -492,6 +508,7 @@ class hero{
 	/**
 	 * qtzl-lib hero render function
 	 * assembles all parts of the hero and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $hero = new hero(); $hero->render();
 	 * @version Bekermeye (1.2007)
@@ -500,10 +517,15 @@ class hero{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
 		$hero = $this->init.$this->body.$this->end;
-		return $hero;
+
+		if($print==TRUE){
+			echo $hero;
+		}else{
+			return $hero;
+		}
 
 	}
 
@@ -580,6 +602,7 @@ class section{
 	/**
 	 * qtzl-lib section render function
 	 * assembles all parts of the section and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $section = new section(); $section->render();
 	 * @version Bekermeye (1.2007)
@@ -588,10 +611,15 @@ class section{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
 		$section = $this->init.$this->body.$this->end;
-		return $section;
+
+		if($print==TRUE){
+			echo $section;
+		}else{
+			return $section;
+		}
 
 	}
 
@@ -661,6 +689,7 @@ class footer{
 	/**
 	 * qtzl-lib footer render function
 	 * assembles all parts of the footer and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $footer = new footer(); $footer->render();
 	 * @version Bekermeye (1.2007)
@@ -669,10 +698,15 @@ class footer{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
-		$section = $this->init.$this->body.$this->end;
-		return $section;
+		$footer = $this->init.$this->body.$this->end;
+
+		if($print==TRUE){
+			echo $footer;
+		}else{
+			return $footer;
+		}
 
 	}
 
@@ -775,6 +809,7 @@ class tile{
 	/**
 	 * qtzl-lib tile render function
 	 * assembles all parts of the tile and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $tile = new tile(); $tile->render();
 	 * @version Bekermeye (1.2007)
@@ -783,10 +818,15 @@ class tile{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
 		$tile = $this->init.$this->body.$this->end;
-		return $tile;
+
+		if($print==TRUE){
+			echo $tile;
+		}else{
+			return $tile;
+		}
 
 	}
 

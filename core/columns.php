@@ -27,7 +27,7 @@
  */
 class columns{
 
-	// TODO Implement the offset propiertys
+	// TODO Implement the offset propierty
 	private $init = '';
 
 	private $body = '';
@@ -138,6 +138,7 @@ class columns{
 	/**
 	 * qtzl-lib columns render function
 	 * assembles all parts of the columns and returns all the html code
+	 * @param $print boolean to print the html code
 	 * @return string
 	 * @example $columns = new columns(); $columns->render();
 	 * @version Bekermeye (1.2007)
@@ -146,10 +147,15 @@ class columns{
 	 * @author Enrique Canto <eacm97@hotmail.com>
 	 * @license GNU General Public License Version 3
 	 */
-	function render(){
+	function render($print = TRUE){
 
 		$columns = $this->init.$this->body.$this->end;
-		return $columns;
+
+		if($print==TRUE){
+			echo $columns;
+		}else{
+			return $columns;
+		}
 
 	}
 

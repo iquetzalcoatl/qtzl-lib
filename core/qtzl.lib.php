@@ -110,21 +110,25 @@ class engine{
 					break;
 			}
 		}
+		if(in_array('main.inc.php',scandir(getcwd()))){
+			$this->path = '';
+			$this->location = qtzl_location().ROOT.'/';
+		}else{
+			$this->path = qtzl_location();
+			$this->location = qtzl_location();
+		}
 		if($this->connection=='online'){
 			$this->css = 'https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css';
 			$this->map = 'https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.css.map';
+			$this->css_extra = $this->location.'core/css/extra.css';
 			$this->icons = 'https://kit.fontawesome.com/df83b7e0ad.js" crossorigin="anonymous';
-			$this->js = 'https://cdn.jsdelivr.net/npm/@vizuaalog/bulmajs@0.11.0/dist/bulma.js';
+			$this->js = 'https://cdn.jsdelivr.net/npm/@vizuaalog/bulmajs@0.12.0/dist/bulma.js';
 		}else{
-			$this->css = qtzl_location().'core/css/bulma.css';
-			$this->map = qtzl_location().'core/css/bulma.css.map';
-			$this->icons = qtzl_location().'core/js/fontsawesome.js';
-			$this->js = qtzl_location().'core/js/bulma.js';
-		}
-		if(in_array('main.inc.php',scandir(getcwd()))){
-			$this->path = '';
-		}else{
-			$this->path = qtzl_location();
+			$this->css = $this->location.'core/css/bulma.css';
+			$this->map = $this->location.'core/css/bulma.css.map';
+			$this->css_extra = $this->location.'core/css/extra.css';
+			$this->icons = $this->location.'core/js/fontsawesome.js';
+			$this->js = $this->location.'core/js/bulma.js';
 		}
 
 		$this->html = '
@@ -149,6 +153,8 @@ class engine{
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="'.$this->css.
+			'">
+<link rel="stylesheet" type="text/css" href="'.$this->css_extra.
 			'">
 
 </head>
@@ -1607,6 +1613,20 @@ document.addEventListener(\'DOMContentLoaded\', function () {
 				return $this->button;
 			}
 		}
+
+	}
+
+}
+
+class tabs{
+
+	var $tab;
+
+	function __construct(){
+
+		$this->tab = '
+<div class="tabs-wrapper">
+	<div class="tabs">';
 
 	}
 

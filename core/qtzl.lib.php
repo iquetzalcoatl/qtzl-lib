@@ -1622,11 +1622,166 @@ class tabs{
 
 	var $tab;
 
-	function __construct(){
+	var $aligment;
 
+	var $size;
+
+	var $style;
+
+	var $mode;
+
+	var $headers;
+
+	var $contents;
+
+	function __construct($alignment = NULL,$size = NULL,$style = NULL){
+
+		switch($alignment){
+			case 'center':
+				$this->aligment = ' is-centered';
+				break;
+			case 'right':
+				$this->aligment = ' is-right';
+				break;
+			case 'left':
+				$this->aligment = ' is-left';
+				break;
+			default:
+				$this->aligment = '';
+				break;
+		}
+
+		switch($size){
+			case 'small':
+				$this->size = ' is-small';
+				break;
+			case 'medium':
+				$this->size = ' is-medium';
+				break;
+			case 'large':
+				$this->size = ' is-large';
+				break;
+			default:
+				$this->size = '';
+				break;
+		}
+
+		switch($style){
+			case 'box':
+				$this->style = ' is-boxed';
+				break;
+			case 'toggle':
+				$this->style = ' is-toggle';
+				break;
+			case 'round':
+				$this->style = ' is-toggle is-toggle-rounded';
+				break;
+			case 'full':
+				$this->style = ' is-fullwidth';
+				break;
+			default:
+				$this->style = '';
+				break;
+		}
+		$this->mode = $this->aligment.$this->size.$this->style;
 		$this->tab = '
 <div class="tabs-wrapper">
-	<div class="tabs">';
+	<div class="tabs'.$this->mode.'">';
+
+	}
+
+	function addHeaders($title = NULL){
+
+		if($title==NULL){
+			$title = 'title';
+		}
+		if(!is_array($title)){
+			$title = array($title);
+		}
+		$i = 0;
+		while($i<count($title)){
+			$this->headers .= '<a>'.$title[$i].'</a>,';
+			$i++;
+		}
+		$headers = explode(',',$this->headers);
+		unset($headers[count($headers)-1]);
+		$i = 0;
+		$this->tab_headers = '
+		<ul>';
+		while($i<count($headers)){
+			if($i==0){
+				$active = ' class="is-active"';
+			}else{
+				$active = '';
+			}
+			$this->tab_headers .= '
+			<li'.$active.'>
+				'.$headers[$i].'
+			</li>';
+			$i++;
+		}
+		$this->tab_headers .= '
+		</ul>
+	</div>';
+
+	}
+
+	function addContent($content = NULL){
+
+		if($content==NULL){
+			$content = '<strong>Tab Content</strong> Lorem ipsum dolor';
+		}
+		if(!is_array($content)){
+			$content = array($content);
+		}
+		$i = 0;
+		while($i<count($content)){
+			$this->contents .= $content[$i].',';
+			$i++;
+		}
+		$contents = explode(',',$this->contents);
+		unset($contents[count($contents)-1]);
+
+		$this->tab_contents = '
+	<div class="tabs-content">
+		<ul>';
+		$i = 0;
+		while($i<count($contents)){
+			if($i==0){
+				$active = ' class="is-active"';
+			}else{
+				$active = '';
+			}
+			$this->tab_contents .= '
+			<li'.$active.'>
+				'.$contents[$i].'
+			</li>';
+			$i++;
+		}
+		$this->tab_contents .= '
+		</ul>
+	</div>';
+
+	}
+
+	function render($output = TRUE){
+
+		if($this->headers==NULL){
+			$this->addHeaders();
+		}
+
+		$this->tab .= $this->tab_headers;
+
+		if($this->contents!=NULL){
+			$this->tab .= $this->tab_contents;
+		}
+		$this->tab .= '
+</div>';
+		if($output==TRUE){
+			echo $this->tab;
+		}else{
+			return $this->tab;
+		}
 
 	}
 

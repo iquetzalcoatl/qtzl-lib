@@ -6,3 +6,10 @@
 .tabs-content li.is-active {
     display: block;
 }
+#tab-content p {
+  display: none;
+}
+
+#tab-content p.is-active {
+  display: block;
+}

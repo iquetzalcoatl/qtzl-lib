@@ -14,7 +14,7 @@
 
 We know, at this time we really want to be full-stack developers, but sometimes we need to deploy a web application in PHP, and... oh no 😱 we need a frontend to show a quick code. so you start to learn some CSS framework and oh no 😰, we need to learn patterns of design and a lot of things.
 
-Yeah, We know it's difficult to get exactly the correct design for our 
+Yeah, We know it's difficult to get exactly the correct design for our project
 
 Qtzl-lib was developed to get an easy frontend and which it's better in oriented object programming.
 Let's save time to design and keep coding.👨‍💻

@@ -284,7 +284,6 @@ class level{
  */
 class mediaObject{
 
-	// TODO add templates to the class
 	private $init = '';
 
 	private $mediaLeft = '';
@@ -414,6 +413,80 @@ class mediaObject{
 		}else{
 			return $mediaObject;
 		}
+
+	}
+
+	/**
+	 * qtzl-lib mediaObject mediaObjectBox function
+	 * creates a customizable mediaObject box template
+	 * @param $image string to set image source
+	 * @param $title stringto set mediaObject title
+	 * @param $account string to set mediaObject secondary title
+	 * @param $timestap string to set a timestamp
+	 * @param $text string to set mediaObject text
+	 * @param $icon string to set mediaObject icons from FontAwesome5 library
+	 * @example $mediaObj = new mediaObject();
+	 * $mediaObj->mediaBox($image,$title,$account, $timestap, $text, $icon);
+	 * @version Bekermeye (1.2007)
+	 * @copyright (C) 2007 Free Software Foundation <http:fsf.org/>
+	 * @author Javier Garrido <javier-garrido@live.com>
+	 * @author Enrique Canto <eacm97@hotmail.com>
+	 * @license GNU General Public License Version 3
+	 */
+
+	// This function is a template for a mediaObject
+	function mediaObjectBox($image = NULL,$title = NULL,$account = NULL,
+		$timestap = NULL,$text = NULL,$icon = NULL){
+
+		$this->body = '
+    <article class="media">';
+
+		if($image!=NULL){
+			$this->body .= '
+	<div class="media-left">
+		<figure class="image is-64x64">
+			<img src="'.$image.'" alt="Image">
+		</figure>
+	</div>';
+		}
+
+		$this->body .= '
+	<div class="media-content">
+		<div class="content">
+			<p>
+				<strong>'.$title.'</strong> <small>'.$account.'</small> <small>'.$timestap.
+			'</small>
+				<br>
+			'.$text.'
+			</p>
+		</div>
+		<nav class="level is-mobile">
+		<div class="level-left">';
+
+		if($icon!=NULL){
+
+			if(!is_array($icon)){
+
+				$icon = array($icon);
+			}
+
+			for($i = 0;$i<count($icon);$i++){
+				$this->body .= '
+			<a class="level-item" aria-label="'.$icon[$i].
+					'">
+				<span class="icon is-small">
+					<i class="fas fa-'.$icon[$i].'" aria-hidden="true"></i>
+				</span>
+			</a>';
+			}
+		}
+
+		$this->body .= '
+		</div>
+			</nav>
+		</div>
+    </article>
+                ';
 
 	}
 

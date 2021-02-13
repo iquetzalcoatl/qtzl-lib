@@ -420,7 +420,7 @@ class mediaObject{
 	 * qtzl-lib mediaObject mediaObjectBox function
 	 * creates a customizable mediaObject box template
 	 * @param $image string to set image source
-	 * @param $title stringto set mediaObject title
+	 * @param $title string to set mediaObject title
 	 * @param $account string to set mediaObject secondary title
 	 * @param $timestap string to set a timestamp
 	 * @param $text string to set mediaObject text
@@ -438,11 +438,11 @@ class mediaObject{
 	function mediaObjectBox($image = NULL,$title = NULL,$account = NULL,
 		$timestap = NULL,$text = NULL,$icon = NULL){
 
-		$this->body = '
+		$this->mediaCont = '
     <article class="media">';
 
 		if($image!=NULL){
-			$this->body .= '
+			$this->mediaCont .= '
 	<div class="media-left">
 		<figure class="image is-64x64">
 			<img src="'.$image.'" alt="Image">
@@ -450,7 +450,7 @@ class mediaObject{
 	</div>';
 		}
 
-		$this->body .= '
+		$this->mediaCont .= '
 	<div class="media-content">
 		<div class="content">
 			<p>
@@ -471,7 +471,7 @@ class mediaObject{
 			}
 
 			for($i = 0;$i<count($icon);$i++){
-				$this->body .= '
+				$this->mediaCont .= '
 			<a class="level-item" aria-label="'.$icon[$i].
 					'">
 				<span class="icon is-small">
@@ -481,7 +481,7 @@ class mediaObject{
 			}
 		}
 
-		$this->body .= '
+		$this->mediaCont .= '
 		</div>
 			</nav>
 		</div>
